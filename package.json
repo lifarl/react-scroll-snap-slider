@@ -1,6 +1,6 @@
 {
   "name": "@lifarl/react-scroll-snap-slider",
-  "version": "0.1.0-alpha.1",
+  "version": "0.1.0-alpha.2",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -51,9 +51,7 @@
     "react-dom": ">=16.8.3",
     "styled-components": ">=5.0.1"
   },
-  "dependencies": {
-    "css-scroll-snap-polyfill": "^0.1.2"
-  },
+  "dependencies": {},
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",

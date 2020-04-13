@@ -1,5 +1,4 @@
 import React, { useRef, useEffect, Children, useState } from 'react'
-import scrollSnapPolyfill from 'css-scroll-snap-polyfill'
 import { CarouselProps } from './Carousel.interface'
 import Slide from '../Slide'
 import NavArrow from '../NavArrow'
@@ -22,10 +21,6 @@ const Carousel: React.FC<CarouselProps> = ({
   const observer = useRef<IntersectionObserver>(null)
   const intersectionThreshold = 0.66
   const addNode = (node: HTMLLIElement) => slideRefs.current.push(node)
-
-  useEffect(() => {
-    scrollSnapPolyfill()
-  }, [])
 
   useEffect(() => {
     const intersectionCallback = (entries: IntersectionObserverEntry[]) => {
