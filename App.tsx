@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom'
 import React from 'react'
-import { Carousel } from './src'
+import { Slider } from './src'
 import NavArrow from './src/components/NavArrow'
 
 const getRndHex = () => {
@@ -56,23 +56,23 @@ const App = () => {
   return (
     <>
       <div style={{ width: '100%', height: '400px' }}>
-        <Carousel
+        <Slider
           onSlideVisible={onSlideVisible}
           CustomArrow={NavArrow}
           showMultiItem
         >
           {items.map((item, index) => renderDivSlide(item, index))}
-        </Carousel>
+        </Slider>
       </div>
       <div style={{ width: '100%', height: '400px' }}>
-        <Carousel
+        <Slider
           onSlideVisible={onSlideVisible}
           CustomArrow={NavArrow}
           showMultiItem
           slidesPerPageSettings={slidesPerPageSettings}
         >
           {items.map((item, index) => renderImgSlide(item, index))}
-        </Carousel>
+        </Slider>
       </div>
     </>
   )

@@ -91,7 +91,6 @@ const Carousel: React.FC<CarouselProps> = ({
       const slidesToScroll = Math.floor(
         sliderRef.current.clientWidth / slideWidth
       )
-      console.log(slidesToScroll, sliderRef.current.clientWidth, slideWidth)
       sliderRef.current.scrollBy({
         top: 0,
         behavior: 'smooth',
