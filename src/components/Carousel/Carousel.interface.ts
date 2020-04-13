@@ -1,7 +1,6 @@
 import { NavArrowProps } from '../NavArrow/NavArrow.interface'
 
 export interface CarouselProps {
-  showMultiItem?: boolean
   onSlideVisible?: (index: number) => void
   CustomArrow?: React.ForwardRefExoticComponent<
     NavArrowProps & React.RefAttributes<HTMLDivElement>

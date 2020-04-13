@@ -4,12 +4,11 @@ import { StyledSlide } from './Slide.styled'
 
 const Slide = React.forwardRef(
   (
-    { slideIndex, showMultiItem, slidesPerPageSettings, children }: SlideProps,
+    { slideIndex, slidesPerPageSettings, children }: SlideProps,
     ref: React.Ref<HTMLLIElement>
   ) => {
     return (
       <StyledSlide
-        showMultiItem={showMultiItem}
         slidesPerPageSettings={slidesPerPageSettings}
         data-index-number={slideIndex}
         key={slideIndex}

@@ -56,11 +56,7 @@ const App = () => {
   return (
     <>
       <div style={{ width: '100%', height: '400px' }}>
-        <Slider
-          onSlideVisible={onSlideVisible}
-          CustomArrow={NavArrow}
-          showMultiItem
-        >
+        <Slider onSlideVisible={onSlideVisible} CustomArrow={NavArrow}>
           {items.map((item, index) => renderDivSlide(item, index))}
         </Slider>
       </div>
@@ -68,7 +64,6 @@ const App = () => {
         <Slider
           onSlideVisible={onSlideVisible}
           CustomArrow={NavArrow}
-          showMultiItem
           slidesPerPageSettings={slidesPerPageSettings}
         >
           {items.map((item, index) => renderImgSlide(item, index))}

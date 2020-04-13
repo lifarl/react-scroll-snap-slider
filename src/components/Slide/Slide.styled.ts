@@ -3,7 +3,8 @@ import { StyledSlideProps } from './Slide.interface'
 
 export const StyledSlide = styled.li<StyledSlideProps>`
   scroll-snap-align: center;
-  ${(props: StyledSlideProps) => !props.showMultiItem && 'flex: 1 0 100%;'}
+  display: flex;
+  justify-content: center;
   ${(props: StyledSlideProps) =>
     props.slidesPerPageSettings
       ? `min-width: ${100 / props.slidesPerPageSettings.mobile}%`

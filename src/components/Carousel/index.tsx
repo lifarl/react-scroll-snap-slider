@@ -6,7 +6,6 @@ import { getObserver } from '../../utils/intersectionObserver'
 import { StyledCarousel, StyledSlider } from './Carousel.styled'
 
 const Carousel: React.FC<CarouselProps> = ({
-  showMultiItem = false,
   onSlideVisible,
   CustomArrow,
   slidesPerPageSettings,
@@ -124,15 +123,10 @@ const Carousel: React.FC<CarouselProps> = ({
         </React.Fragment>
       )}
 
-      <StyledSlider
-        onScroll={onSliderScroll}
-        ref={sliderRef}
-        showMultiItem={showMultiItem}
-      >
+      <StyledSlider onScroll={onSliderScroll} ref={sliderRef}>
         {Children.map(children, (child: JSX.Element, index: number) => (
           <Slide
             key={index}
-            showMultiItem={showMultiItem}
             slideIndex={index}
             slidesPerPageSettings={slidesPerPageSettings}
             ref={addNode}

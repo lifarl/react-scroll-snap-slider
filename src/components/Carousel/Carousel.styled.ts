@@ -7,13 +7,7 @@ export const StyledCarousel = styled.div`
   align-items: center;
 `
 
-interface StyledSliderProps {
-  showMultiItem: boolean
-}
-
-export const StyledSlider = styled.ul<StyledSliderProps>`
-  /* ${(props: StyledSliderProps) =>
-    props.showMultiItem && 'scroll-padding-right: 16px;'} */
+export const StyledSlider = styled.ul`
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   display: flex;
