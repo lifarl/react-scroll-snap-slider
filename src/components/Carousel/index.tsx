@@ -22,25 +22,27 @@ const Carousel: React.FC<CarouselProps> = ({
   const addNode = (node: HTMLLIElement) => slideRefs.current.push(node)
 
   useEffect(() => {
-    const intersectionCallback = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry: IntersectionObserverEntry) => {
-        if (entry.intersectionRatio >= intersectionThreshold) {
-          const target = entry.target as HTMLDivElement
-          onSlideVisible && onSlideVisible(Number(target.dataset.indexNumber))
-        }
-      })
-    }
+    if (onSlideVisible) {
+      const intersectionCallback = (entries: IntersectionObserverEntry[]) => {
+        entries.forEach((entry: IntersectionObserverEntry) => {
+          if (entry.intersectionRatio >= intersectionThreshold) {
+            const target = entry.target as HTMLDivElement
+            onSlideVisible && onSlideVisible(Number(target.dataset.indexNumber))
+          }
+        })
+      }
 
-    if (observer.current) observer.current.disconnect()
-    const newObserver = getObserver(
-      observer,
-      intersectionCallback,
-      intersectionThreshold
-    )
-    for (const node of slideRefs.current) {
-      newObserver.observe(node)
+      if (observer.current) observer.current.disconnect()
+      const newObserver = getObserver(
+        observer,
+        intersectionCallback,
+        intersectionThreshold
+      )
+      for (const node of slideRefs.current) {
+        newObserver.observe(node)
+      }
+      return () => newObserver.disconnect()
     }
-    return () => newObserver.disconnect()
   }, [slideRefs, arrowNextRef, arrowPrevRef, observer, onSlideVisible])
 
   useEffect(() => {

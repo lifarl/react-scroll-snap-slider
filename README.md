@@ -10,8 +10,6 @@ npm install --save @lifarl/react-scroll-snap-slider
 
 ## Usage
 
-```
-import { Slider } from "@lifarl/react-scroll-snap-slider"
-```
-
 See example in `App.tsx`
+
+[Demo](https://lifarl.github.io/react-scroll-snap-slider/)
