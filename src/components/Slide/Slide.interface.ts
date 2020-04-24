@@ -1,12 +1,12 @@
-import { slidesPerPageSettings } from '../Carousel/Carousel.interface'
+import { SlidesPerPageSettings } from '../Carousel/Carousel.interface'
 
 export interface SlideProps {
   slideIndex: number
   children?: React.ReactNode
-  slidesPerPageSettings?: slidesPerPageSettings
+  slidesPerPageSettings?: SlidesPerPageSettings
 }
 
 export interface StyledSlideProps {
-  slidesPerPageSettings?: slidesPerPageSettings
+  slidesPerPageSettings?: SlidesPerPageSettings
   showMultiItem?: boolean
 }
