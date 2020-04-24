@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 
-export const StyledNavWrapper = styled.div<{ direction: 'prev' | 'next' }>`
+export const StyledNavWrapper = styled.div<{
+  direction: 'prev' | 'next'
+}>`
   position: absolute;
   ${(props) => props.direction === 'next' && 'right: 5%;'}
   ${(props) => props.direction === 'prev' && 'left: 5%;'}
@@ -12,6 +14,10 @@ export const StyledNavWrapper = styled.div<{ direction: 'prev' | 'next' }>`
   z-index: 1;
   :active {
     transform: scale(0.9);
+  }
+
+  @media (max-width: 512px) {
+    display: none !important;
   }
 `
 

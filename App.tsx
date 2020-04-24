@@ -53,18 +53,29 @@ const App = () => {
     tablet: 2.5,
     desktop: 5,
   }
+  const renderCustomArrow = ({ direction, ref, onClick }) => (
+    <NavArrow
+      ref={ref}
+      direction={direction}
+      onClick={() => onClick(direction)}
+    />
+  )
+  const onScroll = () => {
+    console.log('scrolling')
+  }
   return (
     <>
       <div style={{ width: '100%', height: '400px' }}>
-        <Slider onSlideVisible={onSlideVisible} CustomArrow={NavArrow}>
+        <Slider>
           {items.map((item, index) => renderDivSlide(item, index))}
         </Slider>
       </div>
       <div style={{ width: '100%', height: '400px' }}>
         <Slider
           onSlideVisible={onSlideVisible}
-          CustomArrow={NavArrow}
+          renderCustomArrow={renderCustomArrow}
           slidesPerPageSettings={slidesPerPageSettings}
+          onScroll={onScroll}
         >
           {items.map((item, index) => renderImgSlide(item, index))}
         </Slider>

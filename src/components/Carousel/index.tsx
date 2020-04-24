@@ -3,24 +3,24 @@ import { CarouselProps } from './Carousel.interface'
 import Slide from '../Slide'
 import NavArrow from '../NavArrow'
 import { getObserver } from '../../utils/intersectionObserver'
-import { StyledCarousel, StyledSlider } from './Carousel.styled'
+import { StyledCarousel, StyledSlider, StyledUl } from './Carousel.styled'
 
 const Carousel: React.FC<CarouselProps> = ({
   onSlideVisible,
-  CustomArrow,
   slidesPerPageSettings,
+  renderCustomArrow,
+  onScroll,
   children,
 }) => {
   const [isScrolling, setIsScrolling] = useState(false)
   const scrollTimeout = useRef<number | null>(null)
-  const sliderRef = useRef<HTMLUListElement>(null)
+  const sliderRef = useRef<HTMLDivElement>(null)
   const slideRefs = useRef<HTMLLIElement[]>([])
   const arrowPrevRef = useRef<HTMLDivElement>(null)
   const arrowNextRef = useRef<HTMLDivElement>(null)
   const observer = useRef<IntersectionObserver>(null)
   const intersectionThreshold = 0.66
   const addNode = (node: HTMLLIElement) => slideRefs.current.push(node)
-
   useEffect(() => {
     if (onSlideVisible) {
       const intersectionCallback = (entries: IntersectionObserverEntry[]) => {
@@ -48,18 +48,21 @@ const Carousel: React.FC<CarouselProps> = ({
   useEffect(() => {
     if (sliderRef.current && arrowNextRef.current && arrowPrevRef.current) {
       if (isScrolling) {
+        if (onScroll) {
+          onScroll()
+        }
         arrowNextRef.current.style.display = 'none'
         arrowPrevRef.current.style.display = 'none'
       } else {
-        if (
+        if (sliderRef.current.scrollLeft <= 0) {
+          arrowNextRef.current.style.display = 'block'
+          arrowPrevRef.current.style.display = 'none'
+        } else if (
           sliderRef.current.clientWidth + sliderRef.current.scrollLeft >=
           sliderRef.current.scrollWidth
         ) {
           arrowPrevRef.current.style.display = 'block'
           arrowNextRef.current.style.display = 'none'
-        } else if (sliderRef.current.scrollLeft <= 0) {
-          arrowNextRef.current.style.display = 'block'
-          arrowPrevRef.current.style.display = 'none'
         } else {
           arrowNextRef.current.style.display = 'block'
           arrowPrevRef.current.style.display = 'block'
@@ -97,18 +100,18 @@ const Carousel: React.FC<CarouselProps> = ({
 
   return (
     <StyledCarousel>
-      {CustomArrow ? (
+      {renderCustomArrow ? (
         <React.Fragment>
-          <CustomArrow
-            ref={arrowPrevRef}
-            direction={'prev'}
-            onClick={() => manualScroll('prev')}
-          />
-          <CustomArrow
-            ref={arrowNextRef}
-            direction={'next'}
-            onClick={() => manualScroll('next')}
-          />
+          {renderCustomArrow({
+            direction: 'prev',
+            ref: arrowPrevRef,
+            onClick: manualScroll,
+          })}
+          {renderCustomArrow({
+            direction: 'next',
+            ref: arrowNextRef,
+            onClick: manualScroll,
+          })}
         </React.Fragment>
       ) : (
         <React.Fragment>
@@ -125,17 +128,23 @@ const Carousel: React.FC<CarouselProps> = ({
         </React.Fragment>
       )}
 
-      <StyledSlider onScroll={onSliderScroll} ref={sliderRef}>
-        {Children.map(children, (child: JSX.Element, index: number) => (
-          <Slide
-            key={index}
-            slideIndex={index}
-            slidesPerPageSettings={slidesPerPageSettings}
-            ref={addNode}
-          >
-            {child}
-          </Slide>
-        ))}
+      <StyledSlider
+        onScroll={onSliderScroll}
+        ref={sliderRef}
+        id={'scrollSnapDiv'}
+      >
+        <StyledUl>
+          {Children.map(children, (child: JSX.Element, index: number) => (
+            <Slide
+              key={index}
+              slideIndex={index}
+              slidesPerPageSettings={slidesPerPageSettings}
+              ref={addNode}
+            >
+              {child}
+            </Slide>
+          ))}
+        </StyledUl>
       </StyledSlider>
     </StyledCarousel>
   )
