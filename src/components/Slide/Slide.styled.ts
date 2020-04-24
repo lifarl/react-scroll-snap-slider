@@ -9,8 +9,9 @@ export const StyledSlide = styled.li<StyledSlideProps>`
     props.slidesPerPageSettings
       ? `min-width: ${100 / props.slidesPerPageSettings.mobile}%`
       : ''};
-  padding-left: 8px;
-  padding-right: 8px;
+  :not(:last-child) {
+    margin-right: 8px;
+  }
 
   @media (min-width: 512px) {
     ${(props: StyledSlideProps) =>
