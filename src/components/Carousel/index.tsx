@@ -10,6 +10,7 @@ const Carousel: React.FC<CarouselProps> = ({
   slidesPerPageSettings,
   renderCustomArrow,
   onScroll,
+  afterScroll,
   children,
 }) => {
   const [isScrolling, setIsScrolling] = useState(false)
@@ -77,6 +78,9 @@ const Carousel: React.FC<CarouselProps> = ({
     scrollTimeout.current = setTimeout(() => {
       scrollTimeout.current = null
       setIsScrolling(false)
+      if (afterScroll) {
+        afterScroll()
+      }
     }, 250)
     if (!isScrolling) {
       setIsScrolling(true)

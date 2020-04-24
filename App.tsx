@@ -63,6 +63,9 @@ const App = () => {
   const onScroll = () => {
     console.log('scrolling')
   }
+  const afterScroll = () => {
+    console.log('scrolling finished')
+  }
   return (
     <>
       <div style={{ width: '100%', height: '400px' }}>
@@ -76,6 +79,7 @@ const App = () => {
           renderCustomArrow={renderCustomArrow}
           slidesPerPageSettings={slidesPerPageSettings}
           onScroll={onScroll}
+          afterScroll={afterScroll}
         >
           {items.map((item, index) => renderImgSlide(item, index))}
         </Slider>

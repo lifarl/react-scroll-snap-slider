@@ -9,6 +9,7 @@ export interface CarouselProps {
   }: CustomArrowProps) => JSX.Element
   slidesPerPageSettings?: SlidesPerPageSettings
   onScroll?: () => void
+  afterScroll?: () => void
 }
 
 export interface SlidesPerPageSettings {
