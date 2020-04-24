@@ -20,6 +20,7 @@ const Carousel: React.FC<CarouselProps> = ({
   const arrowNextRef = useRef<HTMLDivElement>(null)
   const observer = useRef<IntersectionObserver>(null)
   const intersectionThreshold = 0.66
+  const hideArrowThreshold = 30
   const addNode = (node: HTMLLIElement) => slideRefs.current.push(node)
   useEffect(() => {
     if (onSlideVisible) {
@@ -54,12 +55,12 @@ const Carousel: React.FC<CarouselProps> = ({
         arrowNextRef.current.style.display = 'none'
         arrowPrevRef.current.style.display = 'none'
       } else {
-        if (sliderRef.current.scrollLeft <= 0) {
+        if (sliderRef.current.scrollLeft <= hideArrowThreshold) {
           arrowNextRef.current.style.display = 'block'
           arrowPrevRef.current.style.display = 'none'
         } else if (
           sliderRef.current.clientWidth + sliderRef.current.scrollLeft >=
-          sliderRef.current.scrollWidth
+          sliderRef.current.scrollWidth - hideArrowThreshold
         ) {
           arrowPrevRef.current.style.display = 'block'
           arrowNextRef.current.style.display = 'none'
