@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
     "outDir": "./dist",
-    "target": "es5",
-    "module": "commonjs",
-    "noImplicitAny": true,
+    "target": "es6",
+    "module": "ES2015",
+    "noImplicitAny": false,
     "strictNullChecks": true,
     "removeComments": true,
     "declaration": true,
