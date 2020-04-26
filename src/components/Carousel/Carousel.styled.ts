@@ -8,6 +8,9 @@ export const StyledCarousel = styled.div`
 `
 
 export const StyledSlider = styled.div`
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   overflow-x: scroll;
