@@ -1,13 +1,14 @@
 import React, { useRef, useEffect, Children, useState } from 'react'
 import { CarouselProps } from './Carousel.interface'
-import Slide from '../Slide'
-import NavArrow from '../NavArrow'
+import Slide from '../Slide/index'
+import NavArrow from '../NavArrow/index'
 import { getObserver } from '../../utils/intersectionObserver'
 import { StyledCarousel, StyledSlider, StyledUl } from './Carousel.styled'
 
-const Carousel: React.FC<CarouselProps> = ({
+export const Carousel: React.FC<CarouselProps> = ({
   onSlideVisible,
   slidesPerPageSettings,
+  slideWidth,
   renderCustomArrow,
   onScroll,
   afterScroll,
@@ -144,6 +145,7 @@ const Carousel: React.FC<CarouselProps> = ({
               key={index}
               slideIndex={index}
               slidesPerPageSettings={slidesPerPageSettings}
+              slideWidth={slideWidth}
               ref={addNode}
             >
               {child}
@@ -154,5 +156,3 @@ const Carousel: React.FC<CarouselProps> = ({
     </StyledCarousel>
   )
 }
-
-export default Carousel

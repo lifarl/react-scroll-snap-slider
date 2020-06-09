@@ -1,5 +1,3 @@
-import { NavArrowProps } from '../NavArrow/NavArrow.interface'
-
 export interface CarouselProps {
   onSlideVisible?: (index: number) => void
   renderCustomArrow?: ({
@@ -8,12 +6,14 @@ export interface CarouselProps {
     onClick,
   }: CustomArrowProps) => JSX.Element
   slidesPerPageSettings?: SlidesPerPageSettings
+  slideWidth?: number
   onScroll?: () => void
   afterScroll?: () => void
 }
 
 export interface SlidesPerPageSettings {
-  mobile: number
+  mobileSmall: number
+  mobileBig: number
   tablet: number
   desktop: number
 }

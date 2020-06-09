@@ -37,7 +37,7 @@ const renderImgSlide = (item: any, index: number) => {
 }
 
 const App = () => {
-  const itemNumber = 12
+  const itemNumber = 24
   const items = []
   const onSlideVisible = (index: number) => {
     console.log(`Slide number ${index} is visible`)
@@ -49,9 +49,10 @@ const App = () => {
     })
   }
   const slidesPerPageSettings = {
-    mobile: 1.5,
-    tablet: 2.5,
-    desktop: 5,
+    mobileSmall: 1.5,
+    mobileBig: 2.5,
+    tablet: 4,
+    desktop: 8,
   }
   const renderCustomArrow = ({ direction, ref, onClick }) => (
     <NavArrow
@@ -69,7 +70,7 @@ const App = () => {
   return (
     <>
       <div style={{ width: '100%', height: '400px' }}>
-        <Slider>
+        <Slider slideWidth={200}>
           {items.map((item, index) => renderDivSlide(item, index))}
         </Slider>
       </div>
