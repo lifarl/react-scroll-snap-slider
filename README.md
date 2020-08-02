@@ -11,8 +11,29 @@ A React Slider / Carousel Component with Scroll Snapping and Intersection Observ
 yarn add @lifarl/react-scroll-snap-slider
 ```
 
+Note: This is a react component which uses styled components as peer dependency.
+
 ## Usage
 
 See example in `App.tsx`
 
 [Demo](https://lifarl.github.io/react-scroll-snap-slider/)
+
+## Intersection Observer
+
+Firing tracking events on css based sliders can be done with the intersection observer. Pass `onSlideVisible` to the Carousel and it will fire when a slide enters the viewport without triggering a rerender.
+
+## Props
+
+```javascript
+onSlideVisible?: (index: number) => void
+renderCustomArrow?: ({
+  direction,
+  ref,
+  onClick,
+}: CustomArrowProps) => JSX.Element
+slidesPerPageSettings?: SlidesPerPageSettings
+slideWidth?: number
+onScroll?: () => void
+afterScroll?: () => void
+```
