@@ -8,7 +8,7 @@ export interface CarouselProps {
   slidesPerPageSettings?: SlidesPerPageSettings
   slideWidth?: number
   onScroll?: () => void
-  afterScroll?: () => void
+  afterScroll?: (index: number) => void
 }
 
 export interface SlidesPerPageSettings {
