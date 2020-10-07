@@ -28,7 +28,10 @@ export const Carousel = forwardRef<CarouselRef, CarouselProps>(({
   const lastVisibleSlideIndex = useRef(0)
   const intersectionThreshold = 0.66
   const hideArrowThreshold = 30
-  const addNode = (node: HTMLLIElement) => slideRefs.current.push(node)
+
+  const addNode = useCallback((node: HTMLLIElement, index: number) => {
+    slideRefs.current[index] = node
+  }, [])
 
   const getSlideWidth = useCallback(() => (sliderRef.current?.firstChild?.firstChild as HTMLUListElement)
   .clientWidth || 0, [])
@@ -201,7 +204,7 @@ export const Carousel = forwardRef<CarouselRef, CarouselProps>(({
               slideIndex={index}
               slidesPerPageSettings={slidesPerPageSettings}
               slideWidth={slideWidth}
-              ref={addNode}
+              ref={(node: HTMLLIElement) => addNode(node, index)}
             >
               {child}
             </Slide>
@@ -211,3 +214,5 @@ export const Carousel = forwardRef<CarouselRef, CarouselProps>(({
     </StyledCarousel>
   )
 })
+
+Carousel.displayName = 'Carousel'
