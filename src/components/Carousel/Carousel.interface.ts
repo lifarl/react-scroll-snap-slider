@@ -9,6 +9,7 @@ export interface CarouselProps {
   slideWidth?: number
   onScroll?: () => void
   afterScroll?: (index: number) => void
+  children: JSX.Element[]
 }
 
 export interface SlidesPerPageSettings {

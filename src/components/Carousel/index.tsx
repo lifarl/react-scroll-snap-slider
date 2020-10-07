@@ -9,7 +9,7 @@ export interface CarouselRef {
   scrollToSlide: Function
 }
 
-export const Carousel = forwardRef<CarouselRef, CarouselProps>(({
+export const Carousel = forwardRef(({
   onSlideVisible,
   slidesPerPageSettings,
   slideWidth,
@@ -17,7 +17,7 @@ export const Carousel = forwardRef<CarouselRef, CarouselProps>(({
   onScroll,
   afterScroll,
   children,
-}, ref) => {
+}: CarouselProps, ref: React.Ref<CarouselRef>) => {
   const [isScrolling, setIsScrolling] = useState(false)
   const scrollTimeout = useRef<number | null>(null)
   const sliderRef = useRef<HTMLDivElement>(null)
