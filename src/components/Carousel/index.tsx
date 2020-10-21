@@ -34,7 +34,7 @@ export const Carousel = forwardRef(({
   }, [])
 
   const getSlideWidth = useCallback(() => (sliderRef.current?.firstChild?.firstChild as HTMLUListElement)
-  .clientWidth || 0, [])
+  ?.clientWidth || 0, [])
 
   const intersectionCallback = useCallback((entries: IntersectionObserverEntry[]) => {
     entries.forEach((entry: IntersectionObserverEntry) => {
