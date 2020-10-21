@@ -25,7 +25,7 @@ Firing tracking events on css based sliders can be done with the intersection ob
 
 ## Props
 
-```javascript
+```typescript
 onSlideVisible?: (index: number) => void
 renderCustomArrow?: ({
   direction,
@@ -35,5 +35,6 @@ renderCustomArrow?: ({
 slidesPerPageSettings?: SlidesPerPageSettings
 slideWidth?: number
 onScroll?: () => void
-afterScroll?: () => void
+afterScroll?: (index: number) => void
+children: React.ReactNode
 ```
