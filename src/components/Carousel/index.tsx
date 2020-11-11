@@ -38,13 +38,22 @@ export const Carousel = forwardRef(({
 
   const intersectionCallback = useCallback((entries: IntersectionObserverEntry[]) => {
     entries.forEach((entry: IntersectionObserverEntry) => {
+      const target = entry.target as HTMLUListElement
+      const index = Number(target.dataset.indexNumber)
+
       if (entry.intersectionRatio >= intersectionThreshold) {
-        const target = entry.target as HTMLUListElement
-        lastVisibleSlideIndex.current = Number(target.dataset.indexNumber)
+        slideRefs.current[index].setAttribute('aria-hidden', 'false')
+
+        lastVisibleSlideIndex.current = index
+
         if (onSlideVisible) {
           onSlideVisible(lastVisibleSlideIndex.current)
         }
+
+        return
       }
+
+      slideRefs.current[index].setAttribute('aria-hidden', 'true')
     })
   }, [])
 
