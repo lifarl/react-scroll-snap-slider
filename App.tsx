@@ -61,11 +61,14 @@ const App = () => {
       onClick={() => onClick(direction)}
     />
   )
-  const onScroll = () => {
-    console.log('scrolling')
+  const onSlidesVisibilityChange = () => {
+    console.log('slides visibility changed')
   }
-  const afterScroll = () => {
-    console.log('scrolling finished')
+  const onScrollStart = () => {
+    console.log('scrolling started')
+  }
+  const onScrollEnd = () => {
+    console.log('scrolling ended')
   }
   return (
     <>
@@ -79,8 +82,9 @@ const App = () => {
           onSlideVisible={onSlideVisible}
           renderCustomArrow={renderCustomArrow}
           slidesPerPageSettings={slidesPerPageSettings}
-          onScroll={onScroll}
-          afterScroll={afterScroll}
+          onScrollStart={onScrollStart}
+          onSlidesVisibilityChange={onSlidesVisibilityChange}
+          onScrollEnd={onScrollEnd}
         >
           {items.map((item, index) => renderImgSlide(item, index))}
         </Slider>
