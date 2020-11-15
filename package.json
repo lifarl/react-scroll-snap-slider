@@ -20,7 +20,10 @@
   "keywords": [
     "react",
     "carousel",
-    "scroll snapping"
+    "scroll snapping",
+    "scroll snap",
+    "scroll",
+    "slider"
   ],
   "author": "lifarl",
   "license": "MIT",
