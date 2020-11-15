@@ -5,6 +5,8 @@ A React Slider / Carousel Component with Scroll Snapping and Intersection Observ
 [![npm version](https://badge.fury.io/js/%40lifarl%2Freact-scroll-snap-slider.svg)](https://badge.fury.io/js/%40lifarl%2Freact-scroll-snap-slider)
 ![NPM](https://img.shields.io/npm/l/@lifarl/react-scroll-snap-slider)
 
+![demo](https://user-images.githubusercontent.com/35375260/99197384-7d8c7e80-2792-11eb-8d05-c7ab66d3bd92.png)
+
 ## Installation
 
 ```
