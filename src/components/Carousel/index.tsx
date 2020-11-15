@@ -10,12 +10,13 @@ export interface CarouselRef {
 }
 
 export const Carousel = forwardRef(({
-  onSlideVisible,
+  renderCustomArrow,
   slidesPerPageSettings,
   slideWidth,
-  renderCustomArrow,
-  onScroll,
-  afterScroll,
+  onScrollStart,
+  onScrollEnd,
+  onSlidesVisibilityChange,
+  onSlideVisible,
   children,
 }: CarouselProps, ref: React.Ref<CarouselRef>) => {
   const [isScrolling, setIsScrolling] = useState(false)
@@ -26,7 +27,9 @@ export const Carousel = forwardRef(({
   const arrowNextRef = useRef<HTMLDivElement>(null)
   const observer = useRef<IntersectionObserver>(null)
   const lastVisibleSlideIndex = useRef(0)
-  const intersectionThreshold = 0.66
+  const medianVisibleSlideIndex = useRef(0)
+  const visibleSlidesIndices = useRef<number[]>([])
+  const intersectionThreshold = 0.5
   const hideArrowThreshold = 30
 
   const addNode = useCallback((node: HTMLLIElement, index: number) => {
@@ -42,26 +45,31 @@ export const Carousel = forwardRef(({
       const index = Number(target.dataset.indexNumber)
 
       if (entry.intersectionRatio >= intersectionThreshold) {
+        lastVisibleSlideIndex.current = index
+        visibleSlidesIndices.current.push(index)
+        visibleSlidesIndices.current.sort()
+
         slideRefs.current[index].setAttribute('aria-hidden', 'false')
 
-        lastVisibleSlideIndex.current = index
-
-        if (onSlideVisible) {
-          onSlideVisible(lastVisibleSlideIndex.current)
-        }
-
+        onSlideVisible?.(index)
+        
         return
       }
 
+      visibleSlidesIndices.current = visibleSlidesIndices.current.filter(item => item !== index)
       slideRefs.current[index].setAttribute('aria-hidden', 'true')
     })
+
+    medianVisibleSlideIndex.current = visibleSlidesIndices.current[Math.floor(visibleSlidesIndices.current.length / 2)]
+
+    onSlidesVisibilityChange?.(medianVisibleSlideIndex.current)
   }, [])
 
   const isSliderScrollable = useCallback(() => {
     if (!sliderRef.current) return false
 
     const sliderWidth = sliderRef.current.clientWidth
-    const slideWidth = getSlideWidth()
+    const slideWidth = getSlideWidth() - 1 // - 1 is to make sure that fractional widths don't count
 
     return slideRefs.current.length * slideWidth > sliderWidth
   }, [])
@@ -86,10 +94,9 @@ export const Carousel = forwardRef(({
     scrollTimeout.current = setTimeout(() => {
       scrollTimeout.current = null
       setIsScrolling(false)
-      if (afterScroll) {
-        afterScroll(lastVisibleSlideIndex.current)
-      }
+      onScrollEnd?.(medianVisibleSlideIndex.current)
     }, 250)
+
     if (!isScrolling) {
       setIsScrolling(true)
     }
@@ -132,6 +139,7 @@ export const Carousel = forwardRef(({
   useEffect(() => {
     if (observer.current) observer.current.disconnect()
     const newObserver = getObserver(
+      sliderRef.current,
       observer,
       intersectionCallback,
       intersectionThreshold
@@ -145,32 +153,37 @@ export const Carousel = forwardRef(({
   }, [slideRefs.current.length])
 
   useEffect(() => {
+    if (!isScrolling) return
+
+    onScrollStart?.(medianVisibleSlideIndex.current)
+  }, [isScrolling])
+
+  useEffect(() => {
     if (!isSliderScrollable()) return
 
-    if (sliderRef.current && arrowNextRef.current && arrowPrevRef.current) {
-      if (isScrolling) {
-        if (onScroll) {
-          onScroll()
-        }
-        arrowNextRef.current.style.display = 'none'
-        arrowPrevRef.current.style.display = 'none'
-      } else {
-        if (sliderRef.current.scrollLeft <= hideArrowThreshold) {
-          arrowNextRef.current.style.display = 'block'
-          arrowPrevRef.current.style.display = 'none'
-        } else if (
-          sliderRef.current.clientWidth + sliderRef.current.scrollLeft >=
-          sliderRef.current.scrollWidth - hideArrowThreshold
-        ) {
-          arrowPrevRef.current.style.display = 'block'
-          arrowNextRef.current.style.display = 'none'
-        } else {
-          arrowNextRef.current.style.display = 'block'
-          arrowPrevRef.current.style.display = 'block'
-        }
-      }
+    if (!sliderRef.current || !arrowNextRef.current || !arrowPrevRef.current) return
+
+    if (isScrolling) {
+      arrowNextRef.current.style.display = 'none'
+      arrowPrevRef.current.style.display = 'none'
+
+      return
     }
-  }, [isScrolling])
+
+    if (sliderRef.current.scrollLeft <= hideArrowThreshold) {
+      arrowNextRef.current.style.display = 'block'
+      arrowPrevRef.current.style.display = 'none'
+    } else if (
+      sliderRef.current.clientWidth + sliderRef.current.scrollLeft >=
+      sliderRef.current.scrollWidth - hideArrowThreshold
+    ) {
+      arrowPrevRef.current.style.display = 'block'
+      arrowNextRef.current.style.display = 'none'
+    } else {
+      arrowNextRef.current.style.display = 'block'
+      arrowPrevRef.current.style.display = 'block'
+    }
+  }, [slideRefs.current.length, isScrolling])
 
   return (
     <StyledCarousel>

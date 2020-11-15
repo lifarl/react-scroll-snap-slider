@@ -1,5 +1,5 @@
 export interface CarouselProps {
-  onSlideVisible?: (index: number) => void
+  children: React.ReactNode
   renderCustomArrow?: ({
     direction,
     ref,
@@ -7,9 +7,10 @@ export interface CarouselProps {
   }: CustomArrowProps) => JSX.Element
   slidesPerPageSettings?: SlidesPerPageSettings
   slideWidth?: number
-  onScroll?: () => void
-  afterScroll?: (index: number) => void
-  children: React.ReactNode
+  onScrollStart?: (index: number) => void
+  onScrollEnd?: (index: number) => void
+  onSlidesVisibilityChange?: (index: number) => void
+  onSlideVisible?: (index: number) => void
 }
 
 export interface SlidesPerPageSettings {

@@ -1,4 +1,5 @@
 export const getObserver = (
+  root: HTMLDivElement | null = null,
   ref: React.MutableRefObject<IntersectionObserver | null>,
   callback: (entries: IntersectionObserverEntry[]) => void,
   threshold: number
@@ -8,7 +9,7 @@ export const getObserver = (
     return observer
   }
   const newObserver = new IntersectionObserver(callback, {
-    root: null,
+    root,
     rootMargin: '0px',
     threshold: threshold,
   })
