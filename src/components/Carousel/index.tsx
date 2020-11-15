@@ -51,7 +51,7 @@ export const Carousel = forwardRef(({
 
         slideRefs.current[index].setAttribute('aria-hidden', 'false')
 
-        onSlideVisible?.(index)
+        onSlideVisible && onSlideVisible(index)
         
         return
       }
@@ -62,7 +62,7 @@ export const Carousel = forwardRef(({
 
     medianVisibleSlideIndex.current = visibleSlidesIndices.current[Math.floor(visibleSlidesIndices.current.length / 2)]
 
-    onSlidesVisibilityChange?.(medianVisibleSlideIndex.current)
+    onSlidesVisibilityChange && onSlidesVisibilityChange(medianVisibleSlideIndex.current)
   }, [])
 
   const isSliderScrollable = useCallback(() => {
@@ -94,7 +94,7 @@ export const Carousel = forwardRef(({
     scrollTimeout.current = setTimeout(() => {
       scrollTimeout.current = null
       setIsScrolling(false)
-      onScrollEnd?.(medianVisibleSlideIndex.current)
+      onScrollEnd && onScrollEnd(medianVisibleSlideIndex.current)
     }, 250)
 
     if (!isScrolling) {
@@ -155,7 +155,7 @@ export const Carousel = forwardRef(({
   useEffect(() => {
     if (!isScrolling) return
 
-    onScrollStart?.(medianVisibleSlideIndex.current)
+    onScrollStart && onScrollStart(medianVisibleSlideIndex.current)
   }, [isScrolling])
 
   useEffect(() => {
