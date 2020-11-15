@@ -52,7 +52,7 @@ const App = () => {
     mobileSmall: 1.5,
     mobileBig: 2.5,
     tablet: 4,
-    desktop: 8,
+    desktop: 6,
   }
   const renderCustomArrow = ({ direction, ref, onClick }) => (
     <NavArrow
@@ -72,12 +72,7 @@ const App = () => {
   }
   return (
     <>
-      <div style={{ width: '100%', height: '400px' }}>
-        <Slider slideWidth={200}>
-          {items.map((item, index) => renderDivSlide(item, index))}
-        </Slider>
-      </div>
-      <div style={{ width: '100%', height: '400px' }}>
+      <div style={{ width: '100%', height: '300px' }}>
         <Slider
           onSlideVisible={onSlideVisible}
           renderCustomArrow={renderCustomArrow}
@@ -87,6 +82,11 @@ const App = () => {
           onScrollEnd={onScrollEnd}
         >
           {items.map((item, index) => renderImgSlide(item, index))}
+        </Slider>
+      </div>
+      <div style={{ width: '100%', height: '350px' }}>
+        <Slider slideWidth={200}>
+          {items.map((item, index) => renderDivSlide(item, index))}
         </Slider>
       </div>
     </>
