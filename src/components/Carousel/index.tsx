@@ -150,7 +150,7 @@ export const Carousel = forwardRef(({
       }
     }
     return () => newObserver.disconnect()
-  }, [slideRefs.current.length])
+  }, [React.Children.count(children)])
 
   useEffect(() => {
     if (!isScrolling) return
@@ -183,7 +183,7 @@ export const Carousel = forwardRef(({
       arrowNextRef.current.style.display = 'block'
       arrowPrevRef.current.style.display = 'block'
     }
-  }, [slideRefs.current.length, isScrolling])
+  }, [React.Children.count(children), isScrolling])
 
   return (
     <StyledCarousel>
