@@ -11,6 +11,11 @@ export interface CarouselProps {
   onScrollEnd?: (index: number) => void
   onSlidesVisibilityChange?: (index: number) => void
   onSlideVisible?: (index: number) => void
+  ScrollIndicatorComponent?: React.FC<{
+    handlePositionLeft?: string
+    handleWidth?: string
+    isSliderScrollable?: boolean
+  }>
 }
 
 export interface SlidesPerPageSettings {

@@ -2,11 +2,13 @@ import React, { Children, forwardRef, useCallback, useEffect, useImperativeHandl
 import { CarouselProps } from './Carousel.interface'
 import Slide from '../Slide/index'
 import NavArrow from '../NavArrow/index'
+import ScrollIndicator from '../ScrollIndicator/index'
 import { getObserver } from '../../utils/intersectionObserver'
 import { StyledCarousel, StyledSlider, StyledUl } from './Carousel.styled'
 
 export interface CarouselRef {
   scrollToSlide: Function
+  sliderRef: React.Ref<HTMLDivElement>
 }
 
 export const Carousel = forwardRef(({
@@ -18,9 +20,10 @@ export const Carousel = forwardRef(({
   onSlidesVisibilityChange,
   onSlideVisible,
   children,
+  ScrollIndicatorComponent,
 }: CarouselProps, ref: React.Ref<CarouselRef>) => {
   const [isScrolling, setIsScrolling] = useState(false)
-  const scrollTimeout = useRef<number | null>(null)
+  const scrollTimeout = useRef<NodeJS.Timeout | null>(null)
   const sliderRef = useRef<HTMLDivElement>(null)
   const slideRefs = useRef<HTMLLIElement[]>([])
   const arrowPrevRef = useRef<HTMLDivElement>(null)
@@ -134,6 +137,7 @@ export const Carousel = forwardRef(({
 
   useImperativeHandle(ref, () => ({
     scrollToSlide,
+    sliderRef,
   }))
 
   useEffect(() => {
@@ -233,6 +237,8 @@ export const Carousel = forwardRef(({
           ))}
         </StyledUl>
       </StyledSlider>
+
+      {ScrollIndicatorComponent && <ScrollIndicator ScrollIndicatorComponent={ScrollIndicatorComponent} sliderRef={sliderRef} />}
     </StyledCarousel>
   )
 })
