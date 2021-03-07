@@ -7,6 +7,7 @@ import { StyledCarousel, StyledSlider, StyledUl } from './Carousel.styled'
 
 export interface CarouselRef {
   scrollToSlide: Function
+  sliderRef: React.Ref<HTMLDivElement>
 }
 
 export const Carousel = forwardRef(({
@@ -20,7 +21,7 @@ export const Carousel = forwardRef(({
   children,
 }: CarouselProps, ref: React.Ref<CarouselRef>) => {
   const [isScrolling, setIsScrolling] = useState(false)
-  const scrollTimeout = useRef<number | null>(null)
+  const scrollTimeout = useRef<NodeJS.Timeout | null>(null)
   const sliderRef = useRef<HTMLDivElement>(null)
   const slideRefs = useRef<HTMLLIElement[]>([])
   const arrowPrevRef = useRef<HTMLDivElement>(null)
@@ -134,6 +135,7 @@ export const Carousel = forwardRef(({
 
   useImperativeHandle(ref, () => ({
     scrollToSlide,
+    sliderRef,
   }))
 
   useEffect(() => {
