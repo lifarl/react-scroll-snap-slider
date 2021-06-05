@@ -20,6 +20,7 @@ module.exports = {
   plugins: ['react', '@typescript-eslint', 'jest'],
   rules: {
     'react/prop-types': 0,
+    'no-unused-expressions': 0,
     'no-unused-vars': [
       'error',
       {

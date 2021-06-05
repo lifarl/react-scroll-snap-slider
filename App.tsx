@@ -2,39 +2,10 @@ import ReactDOM from 'react-dom'
 import React from 'react'
 import { Slider } from './src'
 import NavArrow from './src/components/NavArrow'
-
-const getRndHex = () => {
-  return Math.floor(Math.random() * 16777215).toString(16)
-}
-
-const renderDivSlide = (item: any, index: number) => {
-  return (
-    <div key={index}>
-      <div
-        style={{
-          height: '300px',
-          width: '200px',
-          display: 'flex',
-          flexDirection: 'column',
-          textAlign: 'center',
-          backgroundColor: getRndHex(),
-        }}
-      >
-        <p>Slide {index}</p>
-      </div>
-    </div>
-  )
-}
-
-const renderImgSlide = (item: any, index: number) => {
-  return (
-    <img
-      style={{ width: '100%', maxWidth: '300px' }}
-      src={item.src}
-      key={index}
-    ></img>
-  )
-}
+import { getRndHex } from './examples/getRndHex'
+import { renderDivSlide } from './examples/withFixedDivs'
+import { renderImgSlide } from './examples/withImages'
+import { SliderWithScrollToIndex } from './examples/withScrollIndicator'
 
 const App = () => {
   const itemNumber = 24
@@ -72,6 +43,7 @@ const App = () => {
   }
   return (
     <>
+      <h2>With Images:</h2>
       <div style={{ width: '100%', height: '300px' }}>
         <Slider
           onSlideVisible={onSlideVisible}
@@ -84,11 +56,16 @@ const App = () => {
           {items.map((item, index) => renderImgSlide(item, index))}
         </Slider>
       </div>
+      <h2>With Fixed Divs:</h2>
       <div style={{ width: '100%', height: '350px' }}>
         <Slider slideWidth={200}>
           {items.map((item, index) => renderDivSlide(item, index))}
         </Slider>
       </div>
+      <h2>With Indicator:</h2>
+      <SliderWithScrollToIndex
+        items={items.slice(0, 5)}
+      ></SliderWithScrollToIndex>
     </>
   )
 }
