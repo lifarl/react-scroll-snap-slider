@@ -67,7 +67,7 @@ export const Carousel = forwardRef(
             visibleSlidesIndices.current.push(index)
             visibleSlidesIndices.current.sort()
 
-            slideRefs.current[index].setAttribute('aria-hidden', 'false')
+            slideRefs.current[index]?.setAttribute('aria-hidden', 'false')
 
             onSlideVisible && onSlideVisible(index)
 
@@ -77,7 +77,7 @@ export const Carousel = forwardRef(
           visibleSlidesIndices.current = visibleSlidesIndices.current.filter(
             (item) => item !== index
           )
-          slideRefs.current[index].setAttribute('aria-hidden', 'true')
+          slideRefs.current[index]?.setAttribute('aria-hidden', 'true')
         })
 
         medianVisibleSlideIndex.current =
