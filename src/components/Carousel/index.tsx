@@ -243,7 +243,7 @@ export const Carousel = forwardRef(
           </React.Fragment>
         )}
 
-        <StyledSlider onScroll={onSliderScroll} ref={sliderRef}>
+        <StyledSlider onScroll={onSliderScroll} ref={sliderRef} tabIndex={0}>
           <StyledUl>
             {Children.map(children, (child: JSX.Element, index: number) => (
               <Slide
