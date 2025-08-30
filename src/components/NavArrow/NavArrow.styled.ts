@@ -1,28 +1,33 @@
-import styled from 'styled-components'
+import { styled } from 'styled-system/jsx'
 
-export const StyledNavWrapper = styled.div<{
-  direction: 'prev' | 'next'
-}>`
-  position: absolute;
-  ${(props) => props.direction === 'next' && 'right: 5%;'}
-  ${(props) => props.direction === 'prev' && 'left: 5%;'}
-  cursor: pointer;
-  transition: all 0.1s ease-in-out;
-  background-color: white;
-  padding: 0.5em;
-  border-radius: 4px;
-  z-index: 1;
-  :active {
-    transform: scale(0.9);
+export const StyledNavWrapper = styled('div', {
+  base: {
+    position: 'absolute',
+    cursor: 'pointer',
+    transition: 'all 0.1s ease-in-out',
+    backgroundColor: 'white',
+    padding: '0.5em',
+    borderRadius: '4px',
+    zIndex: 1,
+    _active: {
+      transform: 'scale(0.9)'
+    },
+    '@media (max-width: 512px)': {
+      display: 'none !important'
+    }
+  },
+  variants: {
+    direction: {
+      next: { right: '5%' },
+      prev: { left: '5%' }
+    }
   }
+})
 
-  @media (max-width: 512px) {
-    display: none !important;
+export const StyledArrow = styled('svg', {
+  base: {
+    width: '22px',
+    height: '22px',
+    fill: '#676767'
   }
-`
-
-export const StyledArrow = styled.svg`
-  width: 22px;
-  height: 22px;
-  fill: #676767;
-`
+})

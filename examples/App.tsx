@@ -1,22 +1,23 @@
 import ReactDOM from 'react-dom'
 import React from 'react'
-import { Slider } from './src'
-import NavArrow from './src/components/NavArrow'
-import { getRndHex } from './examples/getRndHex'
-import { renderDivSlide } from './examples/withFixedDivs'
-import { renderImgSlide } from './examples/withImages'
-import { SliderWithScrollToIndex } from './examples/withScrollIndicator'
+import '../src/style/index.css'
+import { Slider } from '../src'
+import NavArrow from '../src/components/NavArrow'
+import { getRndHex } from './getRndHex'
+import { renderDivSlide } from './withFixedDivs'
+import { renderImgSlide } from './withImages'
+import { SliderWithScrollToIndex } from './withScrollIndicator'
 
 const App = () => {
   const itemNumber = 24
-  const items = []
+  const items: any = []
   const onSlideVisible = (index: number) => {
     console.log(`Slide number ${index} is visible`)
   }
   for (let i = 0; i <= itemNumber; i++) {
     const hex = getRndHex()
     items.push({
-      src: `https://via.placeholder.com/300/${hex}/808080/`,
+      src: `https://picsum.photos/seed/${hex}/300/300`,
     })
   }
   const slidesPerPageSettings = {

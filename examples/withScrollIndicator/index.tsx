@@ -1,6 +1,6 @@
 import React, { useRef, useState, useMemo } from 'react'
 import { Slider } from '../../src'
-import styled from 'styled-components'
+import { styled } from 'styled-system/jsx'
 import { getRndHex } from '../getRndHex'
 
 interface ScrollSnapSliderRef {
@@ -12,26 +12,35 @@ interface StyledPaginationBulletProps {
   isActive: boolean
 }
 
-const StyledPagination = styled.div`
-  list-style: none;
-  width: 50%;
-  padding: 0 0 20 0;
-  margin: 0 auto;
-  text-align: center;
-  z-index: 10;
-`
+const StyledPagination = styled('div', {
+  base: {
+    listStyle: 'none',
+    width: '50%',
+    padding: '0 0 20 0',
+    margin: '0 auto',
+    textAlign: 'center',
+    zIndex: 10,
+  },
+})
 
-const StyledPaginationBullet = styled.span<StyledPaginationBulletProps>`
-  display: inline-block;
-  width: 12px;
-  height: 12px;
-  background-color: ${(props) => (props.isActive ? '#000' : '#b6b6b6')};
-  cursor: pointer;
-  margin: 0 7px;
-  border-radius: 50%;
-  transition-property: transform, opacity, background-color;
-  transition-duration: 0.3s;
-`
+const StyledPaginationBullet = styled('span', {
+  base: {
+    display: 'inline-block',
+    width: '12px',
+    height: '12px',
+    cursor: 'pointer',
+    margin: '0 7px',
+    borderRadius: '50%',
+    transitionProperty: 'transform, opacity, background-color',
+    transitionDuration: '0.3s',
+  },
+  variants: {
+    isActive: {
+      true: { backgroundColor: '#000' },
+      false: { backgroundColor: '#b6b6b6' },
+    },
+  },
+})
 
 export const renderFullWidthSlide = (index: number) => {
   return (

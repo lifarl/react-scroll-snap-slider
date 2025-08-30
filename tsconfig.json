@@ -3,14 +3,24 @@
     "outDir": "./dist",
     "target": "es5",
     "module": "ES2015",
+    "moduleResolution": "bundler", 
     "noImplicitAny": false,
     "strictNullChecks": true,
     "removeComments": true,
     "declaration": true,
     "sourceMap": true,
     "esModuleInterop": true,
-    "jsx": "react"
+    "jsx": "react",
+    "baseUrl": "./",
+    "paths": {
+      "styled-system/*": ["./styled-system/*"]
+    }
   },
-  "include": ["./src/**/*.tsx", "./src/**/*.ts"],
+  "include": [
+    "./src/**/*.tsx",
+    "./src/**/*.ts",
+    "./styled-system/**/*",
+    "./examples/**/*.tsx"
+  ],
   "exclude": ["node_modules"]
 }

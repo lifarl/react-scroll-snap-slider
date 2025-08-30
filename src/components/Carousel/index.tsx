@@ -33,7 +33,7 @@ export const Carousel = forwardRef(
     ref: React.Ref<CarouselRef>
   ) => {
     const [isScrolling, setIsScrolling] = useState(false)
-    const scrollTimeout = useRef<number | null>(null)
+    const scrollTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
     const sliderRef = useRef<HTMLDivElement>(null)
     const slideRefs = useRef<HTMLLIElement[]>([])
     const arrowPrevRef = useRef<HTMLDivElement>(null)
@@ -116,7 +116,9 @@ export const Carousel = forwardRef(
     }
 
     const onSliderScroll = () => {
-      scrollTimeout.current && clearTimeout(scrollTimeout.current)
+      if (scrollTimeout.current !== null) {
+        clearTimeout(scrollTimeout.current)
+      }
       scrollTimeout.current = setTimeout(() => {
         scrollTimeout.current = null
         setIsScrolling(false)
