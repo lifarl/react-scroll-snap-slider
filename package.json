@@ -6,9 +6,9 @@
   "module": "dist/module.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "dev": "parcel index.html",
+    "dev": "parcel index.html --target pages",
     "build": "rm -rf ./dist && rollup -c",
-    "build:pages": "rm -rf ./dist && parcel build index.html --public-url https://lifarl.github.io/react-scroll-snap-slider/",
+    "build:pages": "rm -rf ./dist && parcel build index.html --target pages --public-url https://lifarl.github.io/react-scroll-snap-slider/",
     "deploy:pages": "gh-pages -d dist",
     "test": "jest"
   },
@@ -17,6 +17,12 @@
     "url": "https://github.com/lifarl/react-scroll-snap-slider.git"
   },
   "homepage": "https://lifarl.github.io/react-scroll-snap-slider",
+  "targets": {
+    "pages": {
+      "context": "browser",
+      "distDir": "dist"
+    }
+  },
   "keywords": [
     "react",
     "carousel",
