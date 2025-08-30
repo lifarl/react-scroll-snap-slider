@@ -5,3 +5,5 @@ yarn-error.log*
 .vscode
 .DS_STORE
 bundleStats.html
+.parcel-cache
+.yarn
