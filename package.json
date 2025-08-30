@@ -6,9 +6,9 @@
   "module": "dist/module.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "dev": "parcel index.html",
+    "dev": "parcel index.html --target pages",
     "build": "rm -rf ./dist && rollup -c",
-    "build:pages": "rm -rf ./dist && parcel build index.html --public-url https://lifarl.github.io/react-scroll-snap-slider/",
+    "build:pages": "rm -rf ./dist && parcel build index.html --target pages --public-url https://lifarl.github.io/react-scroll-snap-slider/",
     "deploy:pages": "gh-pages -d dist",
     "test": "jest"
   },
@@ -17,6 +17,12 @@
     "url": "https://github.com/lifarl/react-scroll-snap-slider.git"
   },
   "homepage": "https://lifarl.github.io/react-scroll-snap-slider",
+  "targets": {
+    "pages": {
+      "context": "browser",
+      "distDir": "dist"
+    }
+  },
   "keywords": [
     "react",
     "carousel",
@@ -51,10 +57,11 @@
     "husky": "^4.2.3",
     "jest": "^25.2.4",
     "lint-staged": "^10.0.10",
-    "parcel-bundler": "^1.12.4",
+    "parcel": "^2.10.3",
     "prettier": "^2.0.2",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
+    "react-is": "^16.13.1",
     "rollup": "^2.7.2",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-filesize": "^7.0.0",
@@ -72,7 +79,6 @@
     "react-dom": ">=16.8.3",
     "styled-components": "^5.0.1"
   },
-  "dependencies": {},
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
