@@ -1,11 +1,13 @@
-import resolve from 'rollup-plugin-node-resolve'
-import pkg from './package.json'
-import filesize from 'rollup-plugin-filesize'
-import progress from 'rollup-plugin-progress'
+import { nodeResolve } from '@rollup/plugin-node-resolve'
+import commonjs from '@rollup/plugin-commonjs'
+import typescript from '@rollup/plugin-typescript'
+import terser from '@rollup/plugin-terser'
 import visualizer from 'rollup-plugin-visualizer'
-import typescript from 'rollup-plugin-typescript2'
-import commonjs from 'rollup-plugin-commonjs'
-import { terser } from 'rollup-plugin-terser'
+import { readFileSync } from 'fs'
+
+const pkg = JSON.parse(
+  readFileSync(new URL('./package.json', import.meta.url), 'utf-8')
+)
 
 export default [
   {
@@ -22,21 +24,19 @@ export default [
         sourcemap: true,
       },
     ],
-    external: ['react', 'react-dom', 'react-is', 'styled-components'],
+    external: [
+      'react',
+      'react-dom',
+      'styled-system/jsx',
+      'styled-system/css',
+    ],
     plugins: [
-      resolve(),
-      typescript(),
-      filesize(),
-      progress({ clearLine: false }),
+      nodeResolve(),
+      commonjs(),
+      typescript({ tsconfig: './tsconfig.json' }),
       visualizer({
         filename: './bundleStats.html',
         title: 'Bundle Stats',
-      }),
-      commonjs({
-        namedExports: {
-          'node_modules/react/index.js': ['createElement'],
-          'node_modules/react-dom/index.js': ['render'],
-        },
       }),
       terser(),
     ],

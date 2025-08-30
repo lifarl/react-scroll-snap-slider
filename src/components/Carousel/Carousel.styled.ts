@@ -1,31 +1,36 @@
-import styled from 'styled-components'
+import { styled } from 'styled-system/jsx'
 
-export const StyledCarousel = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-`
-
-export const StyledSlider = styled.div`
-  ::-webkit-scrollbar {
-    display: none;
+export const StyledCarousel = styled('div', {
+  base: {
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center'
   }
-  -webkit-overflow-scrolling: touch;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  overflow-x: scroll;
-  width: 100%;
-`
+})
 
-export const StyledUl = styled.ul`
-  display: flex;
-  flex-wrap: nowrap;
-  white-space: nowrap;
-  list-style: none;
-  width: 100%;
-  padding: 0;
-  margin: 0;
-`
+export const StyledSlider = styled('div', {
+  base: {
+    '&::-webkit-scrollbar': {
+      display: 'none'
+    },
+    WebkitOverflowScrolling: 'touch',
+    scrollbarWidth: 'none',
+    scrollSnapType: 'x mandatory',
+    scrollBehavior: 'smooth',
+    overflowX: 'scroll',
+    width: '100%'
+  }
+})
+
+export const StyledUl = styled('ul', {
+  base: {
+    display: 'flex',
+    flexWrap: 'nowrap',
+    whiteSpace: 'nowrap',
+    listStyle: 'none',
+    width: '100%',
+    padding: 0,
+    margin: 0
+  }
+})
