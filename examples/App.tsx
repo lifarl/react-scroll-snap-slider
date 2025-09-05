@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom'
 import React from 'react'
-import '../src/style/index.css'
+import '../src/styles.css'
 import { Slider } from '../src'
 import NavArrow from '../src/components/NavArrow'
 import { getRndHex } from './getRndHex'

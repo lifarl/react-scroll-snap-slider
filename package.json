@@ -2,33 +2,44 @@
   "name": "@lifarl/react-scroll-snap-slider",
   "version": "2.0.5",
   "description": "",
-  "main": "dist/index.js",
-  "module": "dist/module.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "scripts": {
-    "dev": "yarn panda && parcel ./examples/index.html --target pages",
-    "build": "rm -rf ./dist && yarn panda && rollup -c",
-    "build:pages": "rm -rf ./dist && yarn panda && parcel build ./examples/index.html --target pages --public-url https://lifarl.github.io/react-scroll-snap-slider/",
+    "dev": "parcel ./examples/index.html --target pages",
+    "build": "rm -rf ./dist && rollup -c && postcss src/styles.css -o dist/styles.css",
+    "build:pages": "rm -rf ./dist && parcel build ./examples/index.html --target pages --public-url https://lifarl.github.io/react-scroll-snap-slider/ && postcss src/styles.css -o dist/styles.css",
     "deploy:pages": "gh-pages -d dist",
     "test": "jest",
-    "panda": "panda codegen",
-    "prepare": "panda codegen",
-    "postinstall": "panda codegen"
+    "prepack": "rollup -c && postcss src/styles.css -o dist/styles.css"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/lifarl/react-scroll-snap-slider.git"
   },
   "homepage": "https://lifarl.github.io/react-scroll-snap-slider",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./styles.css": "./dist/styles.css"
+  },
+  "style": "./dist/styles.css",
   "targets": {
     "pages": {
       "context": "browser",
       "distDir": "dist"
     }
   },
-  "alias": {
-    "styled-system": "./styled-system"
-  },
+  "alias": {},
   "keywords": [
     "react",
     "carousel",
@@ -42,8 +53,7 @@
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
-    "@pandacss/dev": "^0.47.1",
-    "@pandacss/preset-panda": "^0.47.1",
+    "@rollup/plugin-alias": "^5.1.0",
     "@rollup/plugin-commonjs": "^25.0.8",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
@@ -55,6 +65,8 @@
     "@types/testing-library__react": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^2.25.0",
     "@typescript-eslint/parser": "^2.25.0",
+    "autoprefixer": "^10.4.20",
+    "cssnano": "^6.1.2",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.1",
     "eslint-config-standard": "^14.1.1",
@@ -70,12 +82,16 @@
     "jest-environment-jsdom": "^29.7.0",
     "lint-staged": "^10.0.10",
     "parcel": "^2.10.3",
+    "postcss": "^8.4.47",
+    "postcss-cli": "^11.0.0",
     "prettier": "^2.0.2",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
     "rollup": "^4.21.0",
+    "rollup-plugin-dts": "^6.1.1",
     "rollup-plugin-visualizer": "^4.0.4",
     "ts-jest": "^29.2.5",
+    "tsdown": "^0.14.2",
     "typescript": "^5.9.2"
   },
   "peerDependencies": {

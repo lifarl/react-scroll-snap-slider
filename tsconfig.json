@@ -10,16 +10,11 @@
     "declaration": true,
     "sourceMap": true,
     "esModuleInterop": true,
-    "jsx": "react",
-    "baseUrl": "./",
-    "paths": {
-      "styled-system/*": ["./styled-system/*"]
-    }
+    "jsx": "react"
   },
   "include": [
     "./src/**/*.tsx",
     "./src/**/*.ts",
-    "./styled-system/**/*",
     "./examples/**/*.tsx"
   ],
   "exclude": ["node_modules"]

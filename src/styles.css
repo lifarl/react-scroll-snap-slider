@@ -1,0 +1,91 @@
+/* react-scroll-snap-slider plain CSS with variables */
+
+/* Defaults are scoped to component root to avoid global leaks */
+:where(.scs-carousel) {
+  --scs-gap: 8px;
+  --scs-arrow-bg: #fff;
+  --scs-arrow-padding: 0.5em;
+  --scs-arrow-radius: 4px;
+  --scs-arrow-color: #676767;
+  --scs-arrow-size: 22px;
+  --scs-scroll-behavior: smooth;
+}
+
+.scs-carousel {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.scs-slider {
+  width: 100%;
+  overflow-x: scroll;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: var(--scs-scroll-behavior, smooth);
+}
+
+.scs-slider::-webkit-scrollbar {
+  display: none;
+}
+
+.scs-list {
+  display: flex;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  list-style: none;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.scs-slide {
+  display: flex;
+  justify-content: center;
+  scroll-snap-align: center;
+  min-width: var(--scs-min-w, 100%);
+}
+
+.scs-slide:not(:last-child) {
+  margin-right: var(--scs-gap, 8px);
+}
+
+@media (min-width: 512px) {
+  .scs-slide { min-width: var(--scs-min-w-512, var(--scs-min-w, 100%)); }
+}
+@media (min-width: 753px) {
+  .scs-slide { min-width: var(--scs-min-w-753, var(--scs-min-w-512, var(--scs-min-w, 100%))); }
+}
+@media (min-width: 1232px) {
+  .scs-slide { min-width: var(--scs-min-w-1232, var(--scs-min-w-753, var(--scs-min-w-512, var(--scs-min-w, 100%)))); }
+}
+
+.scs-nav {
+  position: absolute;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+  background-color: var(--scs-arrow-bg, #fff);
+  padding: var(--scs-arrow-padding, 0.5em);
+  border-radius: var(--scs-arrow-radius, 4px);
+  z-index: 1;
+  user-select: none;
+}
+
+.scs-nav:active { transform: scale(0.9); }
+
+@media (max-width: 512px) {
+  .scs-nav { display: none !important; }
+}
+
+.scs-nav.scs-nav--prev { left: 5%; }
+.scs-nav.scs-nav--next { right: 5%; }
+
+.scs-arrow {
+  width: var(--scs-arrow-size, 22px);
+  height: var(--scs-arrow-size, 22px);
+  fill: var(--scs-arrow-color, #676767);
+  display: block;
+}

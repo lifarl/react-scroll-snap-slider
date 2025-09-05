@@ -1,4 +1,6 @@
 module.exports = {
-  plugins: [require('@pandacss/dev/postcss')],
+  plugins: [
+    require('autoprefixer')(),
+    require('cssnano')({ preset: 'default' }),
+  ],
 }
-

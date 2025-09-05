@@ -28,6 +28,8 @@ export const Carousel = forwardRef(
       onScrollEnd,
       onSlidesVisibilityChange,
       onSlideVisible,
+      className,
+      classes,
       children,
     }: CarouselProps,
     ref: React.Ref<CarouselRef>
@@ -216,7 +218,7 @@ export const Carousel = forwardRef(
     }, [React.Children.count(children), isScrolling])
 
     return (
-      <StyledCarousel>
+      <StyledCarousel className={classes?.root ?? className}>
         {renderCustomArrow ? (
           <React.Fragment>
             {renderCustomArrow({
@@ -236,17 +238,26 @@ export const Carousel = forwardRef(
               ref={arrowPrevRef}
               direction={'prev'}
               onClick={() => manualScroll('prev')}
+              className={classes?.navPrev ?? classes?.nav}
+              iconClassName={classes?.arrow}
             />
             <NavArrow
               ref={arrowNextRef}
               direction={'next'}
               onClick={() => manualScroll('next')}
+              className={classes?.navNext ?? classes?.nav}
+              iconClassName={classes?.arrow}
             />
           </React.Fragment>
         )}
 
-        <StyledSlider onScroll={onSliderScroll} ref={sliderRef} tabIndex={0}>
-          <StyledUl>
+        <StyledSlider
+          onScroll={onSliderScroll}
+          ref={sliderRef}
+          tabIndex={0}
+          className={classes?.slider}
+        >
+          <StyledUl className={classes?.list}>
             {Children.map(children, (child: JSX.Element, index: number) => (
               <Slide
                 key={index}
@@ -254,6 +265,7 @@ export const Carousel = forwardRef(
                 slidesPerPageSettings={slidesPerPageSettings}
                 slideWidth={slideWidth}
                 ref={(node: HTMLLIElement) => addNode(node, index)}
+                className={classes?.slide}
               >
                 {child}
               </Slide>

@@ -1,11 +1,11 @@
 import React from 'react'
 import { SlideProps } from './Slide.interface'
 import { StyledSlide } from './Slide.styled'
-import { css } from 'styled-system/css'
+import type { CSSProperties } from 'react'
 
 const Slide = React.forwardRef(
   (
-    { slideIndex, slidesPerPageSettings, slideWidth, children }: SlideProps,
+    { slideIndex, slidesPerPageSettings, slideWidth, className, children }: SlideProps,
     ref: React.Ref<HTMLLIElement>
   ) => {
     const baseMinWidth = slidesPerPageSettings
@@ -14,30 +14,25 @@ const Slide = React.forwardRef(
       ? `${slideWidth}px`
       : '100%'
 
-    const responsiveClass = css({
-      minWidth: baseMinWidth,
-      '@media (min-width: 512px)': {
-        minWidth: slidesPerPageSettings
-          ? `${100 / slidesPerPageSettings.mobileBig}%`
-          : undefined,
-      },
-      '@media (min-width: 753px)': {
-        minWidth: slidesPerPageSettings
-          ? `${100 / slidesPerPageSettings.tablet}%`
-          : undefined,
-      },
-      '@media (min-width: 1232px)': {
-        minWidth: slidesPerPageSettings
-          ? `${100 / slidesPerPageSettings.desktop}%`
-          : undefined,
-      },
-    })
+    const cssVars: CSSProperties = {
+      ['--scs-min-w' as any]: baseMinWidth,
+      ['--scs-min-w-512' as any]: slidesPerPageSettings
+        ? `${100 / slidesPerPageSettings.mobileBig}%`
+        : undefined,
+      ['--scs-min-w-753' as any]: slidesPerPageSettings
+        ? `${100 / slidesPerPageSettings.tablet}%`
+        : undefined,
+      ['--scs-min-w-1232' as any]: slidesPerPageSettings
+        ? `${100 / slidesPerPageSettings.desktop}%`
+        : undefined,
+    }
 
     return (
       <StyledSlide
-        className={responsiveClass}
+        style={cssVars}
         data-index-number={slideIndex}
         key={slideIndex}
+        className={className}
         ref={ref}
       >
         {children}

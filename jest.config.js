@@ -11,9 +11,6 @@ module.exports = {
   },
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-  moduleNameMapper: {
-    '^styled-system/jsx$': '<rootDir>/test/__mocks__/styled-system-jsx.ts',
-    '^styled-system/css$': '<rootDir>/test/__mocks__/styled-system-css.ts',
-  },
+  moduleNameMapper: {},
   setupFiles: ['./jest.setup.js'],
 }
