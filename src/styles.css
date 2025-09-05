@@ -49,6 +49,11 @@
   min-width: var(--scs-min-w, 100%);
 }
 
+/* Non-visible slides made unfocusable and non-interactive */
+.scs-slide[inert] {
+  pointer-events: none;
+}
+
 .scs-slide:not(:last-child) {
   margin-right: var(--scs-gap, 8px);
 }

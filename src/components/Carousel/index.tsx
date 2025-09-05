@@ -60,9 +60,47 @@ export const Carousel = forwardRef(
 
     const intersectionCallback = useCallback(
       (entries: IntersectionObserverEntry[]) => {
+        const focusableSelector =
+          'a[href],area[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),iframe,object,embed,[contenteditable="true"],[tabindex]'
+
+        const disableFocusWithin = (el: HTMLElement) => {
+          el.setAttribute('inert', '')
+          const focusables = el.querySelectorAll<HTMLElement>(focusableSelector)
+          focusables.forEach((node) => {
+            if (!node.hasAttribute('data-scs-managed')) {
+              const hadTabIndex = node.hasAttribute('tabindex')
+              if (hadTabIndex) {
+                node.setAttribute(
+                  'data-scs-prev-tabindex',
+                  String(node.getAttribute('tabindex'))
+                )
+              } else {
+                node.setAttribute('data-scs-prev-tabindex', 'none')
+              }
+              node.setAttribute('tabindex', '-1')
+              node.setAttribute('data-scs-managed', '1')
+            }
+          })
+        }
+
+        const enableFocusWithin = (el: HTMLElement) => {
+          el.removeAttribute('inert')
+          const managed = el.querySelectorAll<HTMLElement>('[data-scs-managed]')
+          managed.forEach((node) => {
+            const prev = node.getAttribute('data-scs-prev-tabindex')
+            if (prev === 'none') {
+              node.removeAttribute('tabindex')
+            } else if (prev !== null) {
+              node.setAttribute('tabindex', prev)
+            }
+            node.removeAttribute('data-scs-prev-tabindex')
+            node.removeAttribute('data-scs-managed')
+          })
+        }
+
         entries.forEach((entry: IntersectionObserverEntry) => {
-          const target = entry.target as HTMLUListElement
-          const index = Number(target.dataset.indexNumber)
+          const target = entry.target as HTMLLIElement
+          const index = Number((target as any).dataset.indexNumber)
 
           if (entry.intersectionRatio >= intersectionThreshold) {
             lastVisibleSlideIndex.current = index
@@ -70,6 +108,7 @@ export const Carousel = forwardRef(
             visibleSlidesIndices.current.sort()
 
             slideRefs.current[index]?.setAttribute('aria-hidden', 'false')
+            if (slideRefs.current[index]) enableFocusWithin(slideRefs.current[index])
 
             onSlideVisible && onSlideVisible(index)
 
@@ -80,6 +119,7 @@ export const Carousel = forwardRef(
             (item) => item !== index
           )
           slideRefs.current[index]?.setAttribute('aria-hidden', 'true')
+          if (slideRefs.current[index]) disableFocusWithin(slideRefs.current[index])
         })
 
         medianVisibleSlideIndex.current =
