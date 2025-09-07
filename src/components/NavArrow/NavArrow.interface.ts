@@ -3,4 +3,7 @@ export interface NavArrowProps {
   direction: 'next' | 'prev'
   className?: string
   iconClassName?: string
+  ariaControls?: string
+  ariaLabel?: string
+  disabled?: boolean
 }

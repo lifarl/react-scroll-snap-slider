@@ -3,17 +3,23 @@ import React from 'react'
 const cx = (...s: Array<string | undefined>) => s.filter(Boolean).join(' ')
 
 export interface StyledNavWrapperProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   direction?: 'prev' | 'next'
 }
 
 export const StyledNavWrapper = React.forwardRef<
-  HTMLDivElement,
+  HTMLButtonElement,
   StyledNavWrapperProps
->(({ direction, className, ...rest }, ref) => {
+>(({ direction, className, type = 'button', ...rest }, ref) => {
   const dirClass = direction === 'prev' ? 'scs-nav--prev' : 'scs-nav--next'
+  console.log(rest)
   return (
-    <div ref={ref} className={cx('scs-nav', dirClass, className)} {...rest} />
+    <button
+      ref={ref}
+      type={type}
+      className={cx('scs-nav', dirClass, className)}
+      {...rest}
+    />
   )
 })
 
@@ -26,4 +32,3 @@ export const StyledArrow = React.forwardRef<
 
 StyledNavWrapper.displayName = 'StyledNavWrapper'
 StyledArrow.displayName = 'StyledArrow'
-

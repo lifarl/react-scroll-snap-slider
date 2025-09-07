@@ -6,6 +6,7 @@ export interface SlideProps {
   slidesPerPageSettings?: SlidesPerPageSettings
   slideWidth?: number
   className?: string
+  slideCount?: number
 }
 
 export interface StyledSlideProps {

@@ -4,8 +4,16 @@ import { StyledArrow, StyledNavWrapper } from './NavArrow.styled'
 
 const NavArrow = React.forwardRef(
   (
-    { direction, onClick, className, iconClassName }: NavArrowProps,
-    ref: React.Ref<HTMLDivElement>
+    {
+      direction,
+      onClick,
+      className,
+      iconClassName,
+      ariaControls,
+      ariaLabel,
+      disabled,
+    }: NavArrowProps,
+    ref: React.Ref<HTMLButtonElement>
   ) => {
     const path =
       direction === 'prev'
@@ -18,6 +26,9 @@ const NavArrow = React.forwardRef(
         onClick={onClick}
         ref={ref}
         className={className}
+        aria-controls={ariaControls}
+        aria-label={ariaLabel || (direction === 'prev' ? 'Previous slide' : 'Next slide')}
+        disabled={disabled}
       >
         <StyledArrow viewBox="0 0 8 8" className={iconClassName}>
           <path d={path} />

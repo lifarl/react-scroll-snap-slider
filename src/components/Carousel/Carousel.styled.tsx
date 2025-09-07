@@ -10,13 +10,15 @@ export const StyledCarousel = React.forwardRef<
   return <div ref={ref} className={cx('scs-carousel', className)} {...rest} />
 })
 
-export const StyledSlider = React.forwardRef<
+const StyledSliderBase = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >((props, ref) => {
   const { className, ...rest } = props
   return <div ref={ref} className={cx('scs-slider', className)} {...rest} />
 })
+StyledSliderBase.displayName = 'StyledSlider'
+export const StyledSlider = React.memo(StyledSliderBase)
 
 export const StyledUl = React.forwardRef<
   HTMLUListElement,
@@ -27,6 +29,4 @@ export const StyledUl = React.forwardRef<
 })
 
 StyledCarousel.displayName = 'StyledCarousel'
-StyledSlider.displayName = 'StyledSlider'
 StyledUl.displayName = 'StyledUl'
-

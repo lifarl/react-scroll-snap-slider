@@ -79,6 +79,7 @@
   user-select: none;
 }
 
+.scs-nav:disabled { opacity: 66%; }
 .scs-nav:active { transform: scale(0.9); }
 
 @media (max-width: 512px) {
@@ -93,4 +94,8 @@
   height: var(--scs-arrow-size, 22px);
   fill: var(--scs-arrow-color, #676767);
   display: block;
+}
+
+.scs-visually-hidden {
+  visibility: hidden;
 }
