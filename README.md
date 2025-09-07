@@ -1,10 +1,12 @@
 # react-scroll-snap-slider
-A React Slider / Carousel Component with Scroll Snapping and Intersection Observer. ***[Demo](https://lifarl.github.io/react-scroll-snap-slider/)***
+A performant React Slider / Carousel Component with CSS Scroll Snapping, Intersection Observer and Accessibility.
 
 ![npm bundle size](https://img.shields.io/bundlephobia/min/@lifarl/react-scroll-snap-slider)
 [![npm version](https://badge.fury.io/js/%40lifarl%2Freact-scroll-snap-slider.svg)](https://badge.fury.io/js/%40lifarl%2Freact-scroll-snap-slider)
 ![NPM](https://img.shields.io/npm/l/@lifarl/react-scroll-snap-slider)
 
+
+Have a look at the ***[Demo](https://lifarl.github.io/react-scroll-snap-slider/)*** for the different variations.
 ![demo](https://user-images.githubusercontent.com/35375260/99197384-7d8c7e80-2792-11eb-8d05-c7ab66d3bd92.png)
 
 ## Installation
@@ -13,7 +15,7 @@ A React Slider / Carousel Component with Scroll Snapping and Intersection Observ
 yarn add @lifarl/react-scroll-snap-slider
 ```
 
-> Note: From vNext, this library ships plain CSS (no Panda/styled-components). There are no styling peer dependencies.
+> Note: From v3.0.0, this library ships plain CSS (no styled-components). There are no styling peer dependencies.
 
 ## Usage
 
