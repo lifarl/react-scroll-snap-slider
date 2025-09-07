@@ -30,11 +30,4 @@ export default [
       terser(),
     ],
   },
-
-  // Types: roll up to a single dist/index.d.ts
-  {
-    input: 'dist/src/index.d.ts',
-    output: { file: 'dist/index.d.ts', format: 'es' },
-    plugins: [dts()],
-  },
 ]

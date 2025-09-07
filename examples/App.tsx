@@ -1,5 +1,5 @@
-import ReactDOM from 'react-dom'
 import React from 'react'
+import { createRoot } from 'react-dom/client'
 import '../src/styles.css'
 import { Slider } from '../src'
 import NavArrow from '../src/components/NavArrow'
@@ -71,4 +71,8 @@ const App = () => {
   )
 }
 
-ReactDOM.render(App(), document.getElementById('app'))
+const container = document.getElementById('app')
+if (container) {
+  const root = createRoot(container)
+  root.render(<App />)
+}
