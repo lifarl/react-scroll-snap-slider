@@ -45,6 +45,10 @@ See also examples in `App.tsx`
   - `--scs-arrow-color` (default `#676767`)
   - `--scs-arrow-size` (default `22px`)
   - `--scs-scroll-behavior` (default `smooth`)
+  - `--scs-snap-type` (default `x mandatory`) — set to `x proximity` to reduce snap sensitivity on Chrome/Android
+  - `--scs-snap-stop` (default `normal`) — set to `always` to prevent skipping multiple slides per gesture
+  - `--scs-touch-action` (default `pan-x`) — adjust to `auto` if you need vertical gestures over the slider
+  - `--scs-overscroll-behavior` (default `auto`) — set to `contain` to prevent scroll chaining to parent
 
 Slots and class overrides are supported via `classes` on the `Slider` component:
 
@@ -99,3 +103,35 @@ classes?: Partial<{
 ## Browser Support
 
 This lib does not include scroll snap polyfills to support older browsers like ie11. You would need to add them yourself. For more information see [here](https://github.com/PureCarsLabs/css-scroll-snap-polyfill).
+
+## Tuning Snap Feel (Android/Chrome)
+
+Mobile browsers implement different scroll-snap heuristics. If the slider feels “too sensitive” on Android/Chrome (small flicks advance a slide, or gestures skip multiple slides), you can tune behavior via CSS variables:
+
+```css
+/* Apply to your slider root */
+.my-slider {
+  /* Reduce sensitivity */
+  --scs-snap-type: x proximity;  /* default */
+
+  /* Avoid skipping multiple slides */
+  --scs-snap-stop: always;
+
+  /* Optional axis + scroll chaining controls */
+  --scs-touch-action: pan-x;           /* default */
+  --scs-overscroll-behavior: contain;  /* keep scroll inside slider */
+}
+```
+
+Usage:
+
+```tsx
+<Slider classes={{ root: 'my-slider' }}>
+  {...}
+</Slider>
+```
+
+Notes:
+- `x proximity` only snaps when near a snap point, which typically reduces accidental snaps on Android compared to `mandatory`.
+- `scroll-snap-stop: always` ensures the browser does not skip over intermediate slides during a fast flick.
+- If you need vertical page scrolling to take priority when swiping over the slider, set `--scs-touch-action: auto` on the slider root.

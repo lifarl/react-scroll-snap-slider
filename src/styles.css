@@ -24,8 +24,12 @@
   overflow-x: scroll;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
-  scroll-snap-type: x mandatory;
+  /* Make snap behavior configurable */
+  scroll-snap-type: var(--scs-snap-type, x proximity);
   scroll-behavior: var(--scs-scroll-behavior, smooth);
+  /* Optional controls to tune feel across platforms */
+  touch-action: var(--scs-touch-action, pan-x);
+  overscroll-behavior: var(--scs-overscroll-behavior, auto);
 }
 
 .scs-slider::-webkit-scrollbar {
@@ -46,6 +50,8 @@
   display: flex;
   justify-content: center;
   scroll-snap-align: center;
+  /* Prevent skipping multiple slides when desired */
+  scroll-snap-stop: var(--scs-snap-stop, normal);
   min-width: var(--scs-min-w, 100%);
 }
 
