@@ -33,7 +33,7 @@ body { background: var(--demo-bg); color: var(--demo-text); font: 14px/1.45 ui-s
 .demo-container { max-width: 1080px; margin: 0 auto; }
 
 .demo-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
-@media (min-width: 960px) { .demo-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 960px) { .demo-grid { grid-template-columns: 1fr } }
 
 .demo-card {
   background: var(--demo-surface);

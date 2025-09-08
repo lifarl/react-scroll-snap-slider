@@ -169,7 +169,7 @@ export const Carousel = forwardRef(
       }
     }, [getSlideWidth])
 
-    const onSliderScroll = () => {
+    const onSliderScroll = useCallback(() => {
       if (scrollTimeout.current !== null) {
         clearTimeout(scrollTimeout.current)
       }
@@ -182,7 +182,7 @@ export const Carousel = forwardRef(
       if (!isScrolling) {
         setIsScrolling(true)
       }
-    }
+    }, [onScrollEnd, isScrolling])
 
     const scrollTo = useCallback((left: number) => {
       if (!sliderRef.current) return
@@ -239,7 +239,7 @@ export const Carousel = forwardRef(
       if (!isScrolling) return
 
       onScrollStart && onScrollStart(medianVisibleSlideIndex.current)
-    }, [isScrolling])
+    }, [isScrolling, onScrollStart])
 
     useEffect(() => {
       if (!sliderRef.current || !arrowNextRef.current || !arrowPrevRef.current)
@@ -273,10 +273,9 @@ export const Carousel = forwardRef(
     useEffect(() => {
       const el = sliderRef.current
       if (!el) return
-      const handle = () => onSliderScroll()
-      el.addEventListener('scroll', handle, { passive: true })
-      return () => el.removeEventListener('scroll', handle)
-    }, [])
+      el.addEventListener('scroll', onSliderScroll, { passive: true })
+      return () => el.removeEventListener('scroll', onSliderScroll)
+    }, [onSliderScroll])
 
     const childrenCountRef = useRef<number>(React.Children.count(children))
     useEffect(() => {
