@@ -6,7 +6,7 @@
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "dev": "parcel ./examples/index.html --target pages",
+    "dev": "parcel ./examples/index.html --target pages --no-cache",
     "build": "rm -rf ./dist && rollup -c && postcss src/styles.css -o dist/styles.css",
     "build:pages": "rm -rf ./dist && parcel build ./examples/index.html --target pages --public-url https://lifarl.github.io/react-scroll-snap-slider/ && postcss src/styles.css -o dist/styles.css",
     "deploy:pages": "gh-pages -d dist",
@@ -22,7 +22,8 @@
     "dist"
   ],
   "sideEffects": [
-    "*.css"
+    "*.css",
+    "examples/*"
   ],
   "exports": {
     ".": {

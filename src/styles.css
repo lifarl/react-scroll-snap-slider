@@ -25,7 +25,7 @@
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   /* Make snap behavior configurable */
-  scroll-snap-type: var(--scs-snap-type, x proximity);
+  scroll-snap-type: var(--scs-snap-type, x mandatory);
   scroll-behavior: var(--scs-scroll-behavior, smooth);
   /* Optional controls to tune feel across platforms */
   touch-action: var(--scs-touch-action, pan-x);
@@ -83,6 +83,14 @@
   border-radius: var(--scs-arrow-radius, 4px);
   z-index: 1;
   user-select: none;
+  /* Remove default button border and center contents */
+  -webkit-appearance: none;
+  appearance: none;
+  border: 0;
+  outline: none;
+  display: grid;
+  place-items: center;
+  line-height: 0;
 }
 
 .scs-nav:disabled { opacity: 66%; }
@@ -96,10 +104,23 @@
 .scs-nav.scs-nav--next { right: 5%; }
 
 .scs-arrow {
-  width: var(--scs-arrow-size, 22px);
-  height: var(--scs-arrow-size, 22px);
+  width: var(--scs-arrow-size, 20px);
+  height: var(--scs-arrow-size, 20px);
   fill: var(--scs-arrow-color, #676767);
   display: block;
+}
+
+/* Nudge optical centering for path geometry */
+.scs-nav--prev .scs-arrow { transform: translateX(-2px); }
+.scs-nav--next .scs-arrow { transform: translateX(2px); }
+
+/* Accessible, subtle focus style without black border */
+.scs-nav:focus-visible {
+  /* Fallback */
+  outline: 2px solid rgba(103, 103, 103, 0.6);
+  /* Prefer theme color when supported */
+  outline: 2px solid color-mix(in oklab, var(--scs-arrow-color, #676767) 60%, transparent);
+  outline-offset: 2px;
 }
 
 .scs-visually-hidden {

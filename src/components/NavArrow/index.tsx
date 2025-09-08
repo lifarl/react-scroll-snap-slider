@@ -2,7 +2,7 @@ import * as React from 'react'
 import { NavArrowProps } from './NavArrow.interface'
 import { StyledArrow, StyledNavWrapper } from './NavArrow.styled'
 
-const NavArrow = React.forwardRef(
+const NavArrowBase = React.forwardRef(
   (
     {
       direction,
@@ -15,10 +15,15 @@ const NavArrow = React.forwardRef(
     }: NavArrowProps,
     ref: React.Ref<HTMLButtonElement>
   ) => {
-    const path =
-      direction === 'prev'
-        ? 'M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'
-        : 'M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'
+    const path = React.useMemo(
+      () =>
+        direction === 'prev'
+          ? 'M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'
+          : 'M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z',
+      [direction]
+    )
+
+    const pathEl = React.useMemo(() => <path d={path} />, [path])
 
     return (
       <StyledNavWrapper
@@ -31,12 +36,12 @@ const NavArrow = React.forwardRef(
         disabled={disabled}
       >
         <StyledArrow viewBox="0 0 8 8" className={iconClassName}>
-          <path d={path} />
+          {pathEl}
         </StyledArrow>
       </StyledNavWrapper>
     )
   }
 )
-NavArrow.displayName = 'NavArrow'
+NavArrowBase.displayName = 'NavArrow'
 
-export default NavArrow
+export default React.memo(NavArrowBase)

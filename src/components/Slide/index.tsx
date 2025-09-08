@@ -32,4 +32,4 @@ const Slide = React.forwardRef(
 
 Slide.displayName = 'Slide'
 
-export default Slide
+export default React.memo(Slide)

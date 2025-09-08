@@ -112,7 +112,7 @@ Mobile browsers implement different scroll-snap heuristics. If the slider feels 
 /* Apply to your slider root */
 .my-slider {
   /* Reduce sensitivity */
-  --scs-snap-type: x proximity;  /* default */
+  --scs-snap-type: x mandatory;  /* default */
 
   /* Avoid skipping multiple slides */
   --scs-snap-stop: always;

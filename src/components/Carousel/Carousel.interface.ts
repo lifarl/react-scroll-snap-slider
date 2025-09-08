@@ -4,6 +4,7 @@ export interface CarouselProps {
     direction,
     ref,
     onClick,
+    ariaControls
   }: CustomArrowProps) => JSX.Element
   slidesPerPageSettings?: SlidesPerPageSettings
   slideWidth?: number
@@ -27,6 +28,7 @@ interface CustomArrowProps {
   direction: 'prev' | 'next'
   ref: React.RefObject<HTMLButtonElement>
   onClick: (direction: 'prev' | 'next') => void
+  ariaControls: string
 }
 
 export interface CarouselClasses {

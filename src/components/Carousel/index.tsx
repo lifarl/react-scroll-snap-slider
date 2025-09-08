@@ -154,7 +154,7 @@ export const Carousel = forwardRef(
       return slideRefs.current.length * slideWidth > sliderWidth
     }, [])
 
-    const manualScroll = (direction: 'prev' | 'next') => {
+    const manualScroll = useCallback((direction: 'prev' | 'next') => {
       const dir = direction === 'prev' ? -1 : 1
       if (sliderRef.current) {
         const slideWidth = getSlideWidth()
@@ -167,7 +167,7 @@ export const Carousel = forwardRef(
           left: slidesToScroll * slideWidth * dir,
         })
       }
-    }
+    }, [getSlideWidth])
 
     const onSliderScroll = () => {
       if (scrollTimeout.current !== null) {
@@ -335,39 +335,49 @@ export const Carousel = forwardRef(
         aria-roledescription="carousel"
         aria-label={ariaLabel}
       >
-        {renderCustomArrow ? (
-          <React.Fragment>
-            {renderCustomArrow({
-              direction: 'prev',
-              ref: arrowPrevRef,
-              onClick: manualScroll,
-            })}
-            {renderCustomArrow({
-              direction: 'next',
-              ref: arrowNextRef,
-              onClick: manualScroll,
-            })}
-          </React.Fragment>
-        ) : (
-          <React.Fragment>
-            <NavArrow
-              ref={arrowPrevRef}
-              direction={'prev'}
-              onClick={() => manualScroll('prev')}
-              className={classes?.navPrev ?? classes?.nav}
-              iconClassName={classes?.arrow}
-              ariaControls={sliderId}
-            />
-            <NavArrow
-              ref={arrowNextRef}
-              direction={'next'}
-              onClick={() => manualScroll('next')}
-              className={classes?.navNext ?? classes?.nav}
-              iconClassName={classes?.arrow}
-              ariaControls={sliderId}
-            />
-          </React.Fragment>
-        )}
+        {useMemo(() => {
+          if (renderCustomArrow) {
+            return (
+              <React.Fragment>
+                {renderCustomArrow({
+                  direction: 'prev',
+                  ref: arrowPrevRef,
+                  onClick: manualScroll,
+                  ariaControls: sliderId,
+                })}
+                {renderCustomArrow({
+                  direction: 'next',
+                  ref: arrowNextRef,
+                  onClick: manualScroll,
+                  ariaControls: sliderId,
+                })}
+              </React.Fragment>
+            )
+          }
+
+          const onPrevClick = () => manualScroll('prev')
+          const onNextClick = () => manualScroll('next')
+          return (
+            <React.Fragment>
+              <NavArrow
+                ref={arrowPrevRef}
+                direction={'prev'}
+                onClick={onPrevClick}
+                className={classes?.navPrev ?? classes?.nav}
+                iconClassName={classes?.arrow}
+                ariaControls={sliderId}
+              />
+              <NavArrow
+                ref={arrowNextRef}
+                direction={'next'}
+                onClick={onNextClick}
+                className={classes?.navNext ?? classes?.nav}
+                iconClassName={classes?.arrow}
+                ariaControls={sliderId}
+              />
+            </React.Fragment>
+          )
+        }, [renderCustomArrow, classes?.navPrev, classes?.navNext, classes?.nav, classes?.arrow, sliderId, manualScroll])}
 
         <StyledSlider
           ref={sliderRef}

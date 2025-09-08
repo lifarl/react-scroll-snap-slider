@@ -7,12 +7,11 @@ export interface StyledNavWrapperProps
   direction?: 'prev' | 'next'
 }
 
-export const StyledNavWrapper = React.forwardRef<
+const StyledNavWrapperBase = React.forwardRef<
   HTMLButtonElement,
   StyledNavWrapperProps
 >(({ direction, className, type = 'button', ...rest }, ref) => {
   const dirClass = direction === 'prev' ? 'scs-nav--prev' : 'scs-nav--next'
-  console.log(rest)
   return (
     <button
       ref={ref}
@@ -23,12 +22,16 @@ export const StyledNavWrapper = React.forwardRef<
   )
 })
 
-export const StyledArrow = React.forwardRef<
+export const StyledNavWrapper = React.memo(StyledNavWrapperBase)
+
+const StyledArrowBase = React.forwardRef<
   SVGSVGElement,
   React.SVGProps<SVGSVGElement>
 >(({ className, ...rest }, ref) => {
   return <svg ref={ref} className={cx('scs-arrow', className)} {...rest} />
 })
 
-StyledNavWrapper.displayName = 'StyledNavWrapper'
-StyledArrow.displayName = 'StyledArrow'
+export const StyledArrow = React.memo(StyledArrowBase)
+
+StyledNavWrapperBase.displayName = 'StyledNavWrapper'
+StyledArrowBase.displayName = 'StyledArrow'
