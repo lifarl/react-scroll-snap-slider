@@ -3,6 +3,7 @@
     "outDir": "./dist",
     "target": "es5",
     "module": "ES2015",
+    "moduleResolution": "bundler", 
     "noImplicitAny": false,
     "strictNullChecks": true,
     "removeComments": true,
@@ -11,6 +12,9 @@
     "esModuleInterop": true,
     "jsx": "react"
   },
-  "include": ["./src/**/*.tsx", "./src/**/*.ts"],
+  "include": [
+    "./src/**/*.tsx",
+    "./src/**/*.ts"
+  ],
   "exclude": ["node_modules"]
 }
