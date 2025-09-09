@@ -1,6 +1,6 @@
 {
   "name": "@lifarl/react-scroll-snap-slider",
-  "version": "2.0.5",
+  "version": "3.0.0-alpha",
   "description": "",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
