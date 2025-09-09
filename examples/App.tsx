@@ -11,12 +11,12 @@ import { SliderWithScrollToIndex } from './withScrollIndicator'
 
 const App = () => {
   // Demo data
-  const itemNumber = 12
+  const itemNumber = 11
   const items = useMemo(() => {
     const list: Array<{ src: string }> = []
     for (let i = 0; i <= itemNumber; i++) {
       const hex = getRndHex()
-      list.push({ src: `https://picsum.photos/seed/${hex}/300/300` })
+      list.push({ src: `https://picsum.photos/seed/${hex}/400/400` })
     }
     return list
   }, [])
@@ -45,8 +45,8 @@ const App = () => {
     () => ({
       mobileSmall: 1.5,
       mobileBig: 2.5,
-      tablet: 4,
-      desktop: 6,
+      tablet: 3,
+      desktop: 4,
     }),
     []
   )
@@ -70,7 +70,10 @@ const App = () => {
   const fixedDivSlides = useMemo(() => items.map((item, index) => renderDivSlide(item, index)), [items])
 
   // Stable classes object to avoid prop identity churn
-  const sliderClasses = useMemo(() => ({ root: `demo-theme--${theme}`, slider: sliderClass }), [theme, sliderClass])
+  const sliderClasses = useMemo(
+    () => ({ root: `demo-theme--${theme}`, slider: sliderClass }),
+    [theme, sliderClass]
+  )
 
   return (
     <div className="demo-wrap">
@@ -132,7 +135,7 @@ const App = () => {
                   </select>
                 </div>
 
-                <div style={{ width: '100%', height: 300 }}>
+                <div style={{ width: '100%'}}>
                   <Slider
                     ariaLabel="Images demo"
                     classes={sliderClasses}
