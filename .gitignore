@@ -7,3 +7,5 @@ yarn-error.log*
 bundleStats.html
 .parcel-cache
 .yarn
+styled-system
+src/styled-system

@@ -5,6 +5,8 @@ export interface SlideProps {
   children?: React.ReactNode
   slidesPerPageSettings?: SlidesPerPageSettings
   slideWidth?: number
+  className?: string
+  slideCount?: number
 }
 
 export interface StyledSlideProps {

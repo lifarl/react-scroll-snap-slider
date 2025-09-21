@@ -1,6 +1,5 @@
 import React, { useRef, useState, useMemo } from 'react'
 import { Slider } from '../../src'
-import styled from 'styled-components'
 import { getRndHex } from '../getRndHex'
 
 interface ScrollSnapSliderRef {
@@ -8,30 +7,43 @@ interface ScrollSnapSliderRef {
   sliderRef: React.RefObject<HTMLDivElement>
 }
 
-interface StyledPaginationBulletProps {
+const Pagination: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
+  style,
+  ...rest
+}) => (
+  <div
+    style={{
+      listStyle: 'none',
+      width: '50%',
+      padding: '0 0 20px 0',
+      margin: '0 auto',
+      textAlign: 'center',
+      zIndex: 10,
+      ...(style || {}),
+    }}
+    {...rest}
+  />
+)
+
+const PaginationBullet: React.FC<{
   isActive: boolean
-}
-
-const StyledPagination = styled.div`
-  list-style: none;
-  width: 50%;
-  padding: 0 0 20 0;
-  margin: 0 auto;
-  text-align: center;
-  z-index: 10;
-`
-
-const StyledPaginationBullet = styled.span<StyledPaginationBulletProps>`
-  display: inline-block;
-  width: 12px;
-  height: 12px;
-  background-color: ${(props) => (props.isActive ? '#000' : '#b6b6b6')};
-  cursor: pointer;
-  margin: 0 7px;
-  border-radius: 50%;
-  transition-property: transform, opacity, background-color;
-  transition-duration: 0.3s;
-`
+  onClick?: () => void
+}> = ({ isActive, onClick }) => (
+  <span
+    onClick={onClick}
+    style={{
+      display: 'inline-block',
+      width: '12px',
+      height: '12px',
+      cursor: 'pointer',
+      margin: '0 7px',
+      borderRadius: '50%',
+      transitionProperty: 'transform, opacity, background-color',
+      transitionDuration: '0.3s',
+      backgroundColor: isActive ? '#000' : '#b6b6b6',
+    }}
+  />
+)
 
 export const renderFullWidthSlide = (index: number) => {
   return (
@@ -78,17 +90,17 @@ export const SliderWithScrollToIndex: React.FC<any> = (props) => {
       >
         {items}
       </Slider>
-      <StyledPagination>
+      <Pagination>
         {props.items.map((item, index) => {
           return (
-            <StyledPaginationBullet
+            <PaginationBullet
               key={index}
               onClick={() => changeGalleryIndex(index)}
               isActive={slideIndex === index}
-            ></StyledPaginationBullet>
+            />
           )
         })}
-      </StyledPagination>
+      </Pagination>
     </div>
   )
 }

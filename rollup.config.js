@@ -1,43 +1,32 @@
-import resolve from 'rollup-plugin-node-resolve'
-import pkg from './package.json'
-import filesize from 'rollup-plugin-filesize'
-import progress from 'rollup-plugin-progress'
+import { nodeResolve } from '@rollup/plugin-node-resolve'
+import { fileURLToPath } from 'url'
+import { dirname, resolve as resolvePath } from 'path'
+import commonjs from '@rollup/plugin-commonjs'
+import typescript from '@rollup/plugin-typescript'
+import terser from '@rollup/plugin-terser'
 import visualizer from 'rollup-plugin-visualizer'
-import typescript from 'rollup-plugin-typescript2'
-import commonjs from 'rollup-plugin-commonjs'
-import { terser } from 'rollup-plugin-terser'
+import dts from 'rollup-plugin-dts'
+import { readFileSync } from 'fs'
+
+const pkg = JSON.parse(
+  readFileSync(new URL('./package.json', import.meta.url), 'utf-8')
+)
 
 export default [
+  // JS builds (ESM + CJS)
   {
-    input: 'src/index.ts',
+    input: { index: 'src/index.ts' },
     output: [
-      {
-        file: pkg.main,
-        format: 'cjs',
-        sourcemap: true,
-      },
-      {
-        file: pkg.module,
-        format: 'es',
-        sourcemap: true,
-      },
+      { dir: 'dist', format: 'esm', entryFileNames: '[name].mjs', sourcemap: true },
+      { dir: 'dist', format: 'cjs', entryFileNames: '[name].cjs', sourcemap: true, exports: 'named' },
     ],
-    external: ['react', 'react-dom', 'react-is', 'styled-components'],
+    external: ['react', 'react-dom'],
+    treeshake: true,
     plugins: [
-      resolve(),
-      typescript(),
-      filesize(),
-      progress({ clearLine: false }),
-      visualizer({
-        filename: './bundleStats.html',
-        title: 'Bundle Stats',
-      }),
-      commonjs({
-        namedExports: {
-          'node_modules/react/index.js': ['createElement'],
-          'node_modules/react-dom/index.js': ['render'],
-        },
-      }),
+      nodeResolve(),
+      commonjs(),
+      typescript({ tsconfig: './tsconfig.json' }),
+      visualizer({ filename: './bundleStats.html', title: 'Bundle Stats' }),
       terser(),
     ],
   },
