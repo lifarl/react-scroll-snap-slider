@@ -14,7 +14,7 @@ jobs:
         with:
           node-version: '22.x'
           registry-url: 'https://registry.npmjs.org'
-          cache: 'yarn'
+          # Do not use setup-node yarn cache; it runs Yarn before Corepack is enabled
       - name: Enable Corepack and Yarn 4.9.4
         run: |
           corepack enable
