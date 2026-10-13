@@ -1,6 +1,7 @@
 import React from 'react'
 import { Carousel } from './index'
 import { render, screen } from '@testing-library/react'
+import { describe, expect, it } from 'vitest'
 
 const items = [
   {
@@ -21,7 +22,7 @@ describe('Carousel basic tests', () => {
         {items.map((item, index) => (
           <img key={index} src={item.src}></img>
         ))}
-      </Carousel>
+      </Carousel>,
     )
     expect(screen.getAllByRole('img')).toHaveLength(3)
   })
