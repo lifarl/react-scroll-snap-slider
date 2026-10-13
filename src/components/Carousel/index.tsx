@@ -158,10 +158,14 @@ export const Carousel = forwardRef(
       }
     }, [])
 
-    useImperativeHandle(ref, () => ({
-      scrollToSlide,
-      sliderRef,
-    }))
+    useImperativeHandle(
+      ref,
+      () => ({
+        scrollToSlide,
+        sliderRef,
+      }),
+      [scrollToSlide]
+    )
 
     useEffect(() => {
       if (observer.current) observer.current.disconnect()
