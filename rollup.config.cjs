@@ -17,7 +17,7 @@ module.exports = [
         sourcemap: true,
       },
     ],
-    external: ['react', 'react-dom', 'react-is', 'styled-components'],
+    external: ['react', 'react-dom'],
     plugins: [typescript(), terser()],
   },
 ]

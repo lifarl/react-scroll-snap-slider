@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es2019",
+    "jsx": "react",
+    "esModuleInterop": true,
+    "allowJs": false,
+    "skipLibCheck": true,
+    "isolatedModules": true
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ]
+}

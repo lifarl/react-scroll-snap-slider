@@ -1,7 +1,7 @@
 import React from 'react'
 import { Carousel } from './index'
-import { render, screen } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import { act, fireEvent, render, screen } from '@testing-library/react'
+import { describe, expect, it, vi } from 'vitest'
 
 const items = [
   {
@@ -27,8 +27,44 @@ describe('Carousel basic tests', () => {
     expect(screen.getAllByRole('img')).toHaveLength(3)
   })
 
+  it('fires scroll start and end callbacks', () => {
+    vi.useFakeTimers()
+
+    const onScrollStart = vi.fn()
+    const onScrollEnd = vi.fn()
+
+    const { container } = render(
+      <Carousel onScrollStart={onScrollStart} onScrollEnd={onScrollEnd}>
+        {items.map((item, index) => (
+          <img key={index} src={item.src}></img>
+        ))}
+      </Carousel>,
+    )
+
+    const slider = container.querySelector(
+      'div[tabindex="0"]',
+    ) as HTMLDivElement
+    expect(slider).toBeTruthy()
+
+    act(() => {
+      fireEvent.scroll(slider, { target: { scrollLeft: 100 } })
+    })
+
+    expect(onScrollStart).toHaveBeenCalledTimes(1)
+    expect(onScrollStart).toHaveBeenCalledWith(0)
+
+    act(() => {
+      vi.advanceTimersByTime(300)
+    })
+
+    expect(onScrollEnd).toHaveBeenCalledTimes(1)
+    expect(onScrollEnd).toHaveBeenCalledWith(0)
+
+    vi.useRealTimers()
+  })
+
   it('keeps the imperative handle stable across rerenders', () => {
-    const ref = jest.fn()
+    const ref = vi.fn()
     const renderCarousel = () => (
       <Carousel ref={ref}>
         {items.map((item, index) => (

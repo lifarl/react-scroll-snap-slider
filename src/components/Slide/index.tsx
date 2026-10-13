@@ -4,23 +4,25 @@ import { StyledSlide } from './Slide.styled'
 
 const Slide = React.forwardRef(
   (
-    { slideIndex, slidesPerPageSettings, slideWidth, children }: SlideProps,
-    ref: React.Ref<HTMLLIElement>
+    { slideIndex, className, slideCount, children }: SlideProps,
+    ref: React.Ref<HTMLLIElement>,
   ) => {
     return (
       <StyledSlide
-        slidesPerPageSettings={slidesPerPageSettings}
-        slideWidth={slideWidth}
         data-index-number={slideIndex}
         key={slideIndex}
+        className={className}
+        role="group"
+        aria-roledescription="slide"
+        aria-label={`Slide ${slideIndex + 1}${slideCount ? ` of ${slideCount}` : ''}`}
         ref={ref}
       >
         {children}
       </StyledSlide>
     )
-  }
+  },
 )
 
 Slide.displayName = 'Slide'
 
-export default Slide
+export default React.memo(Slide)
