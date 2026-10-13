@@ -1,5 +1,5 @@
-import ReactDOM from 'react-dom'
 import React from 'react'
+import { createRoot } from 'react-dom/client'
 import { Slider } from './src'
 import NavArrow from './src/components/NavArrow'
 import { getRndHex } from './examples/getRndHex'
@@ -70,4 +70,8 @@ const App = () => {
   )
 }
 
-ReactDOM.render(App(), document.getElementById('app'))
+const container = document.getElementById('app')
+
+if (container) {
+  createRoot(container).render(<App />)
+}

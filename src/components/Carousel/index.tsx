@@ -30,10 +30,10 @@ export const Carousel = forwardRef(
       onSlideVisible,
       children,
     }: CarouselProps,
-    ref: React.Ref<CarouselRef>
+    ref: React.Ref<CarouselRef>,
   ) => {
     const [isScrolling, setIsScrolling] = useState(false)
-    const scrollTimeout = useRef<number | null>(null)
+    const scrollTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
     const sliderRef = useRef<HTMLDivElement>(null)
     const slideRefs = useRef<HTMLLIElement[]>([])
     const arrowPrevRef = useRef<HTMLDivElement>(null)
@@ -53,7 +53,7 @@ export const Carousel = forwardRef(
       () =>
         (sliderRef.current?.firstChild?.firstChild as HTMLUListElement)
           ?.clientWidth || 0,
-      []
+      [],
     )
 
     const intersectionCallback = useCallback(
@@ -75,7 +75,7 @@ export const Carousel = forwardRef(
           }
 
           visibleSlidesIndices.current = visibleSlidesIndices.current.filter(
-            (item) => item !== index
+            (item) => item !== index,
           )
           slideRefs.current[index]?.setAttribute('aria-hidden', 'true')
         })
@@ -88,7 +88,7 @@ export const Carousel = forwardRef(
         onSlidesVisibilityChange &&
           onSlidesVisibilityChange(medianVisibleSlideIndex.current)
       },
-      []
+      [],
     )
 
     const isSliderScrollable = useCallback(() => {
@@ -105,7 +105,7 @@ export const Carousel = forwardRef(
       if (sliderRef.current) {
         const slideWidth = getSlideWidth()
         const slidesToScroll = Math.floor(
-          sliderRef.current.clientWidth / slideWidth
+          sliderRef.current.clientWidth / slideWidth,
         )
         sliderRef.current.scrollBy({
           top: 0,
@@ -169,7 +169,7 @@ export const Carousel = forwardRef(
         sliderRef.current,
         observer,
         intersectionCallback,
-        intersectionThreshold
+        intersectionThreshold,
       )
       for (const node of slideRefs.current) {
         if (node) {
@@ -260,7 +260,7 @@ export const Carousel = forwardRef(
         </StyledSlider>
       </StyledCarousel>
     )
-  }
+  },
 )
 
 Carousel.displayName = 'Carousel'
