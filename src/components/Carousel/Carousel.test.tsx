@@ -26,4 +26,22 @@ describe('Carousel basic tests', () => {
     )
     expect(screen.getAllByRole('img')).toHaveLength(3)
   })
+
+  it('keeps the imperative handle stable across rerenders', () => {
+    const ref = jest.fn()
+    const renderCarousel = () => (
+      <Carousel ref={ref}>
+        {items.map((item, index) => (
+          <img key={index} src={item.src}></img>
+        ))}
+      </Carousel>
+    )
+    const { rerender } = render(renderCarousel())
+
+    expect(ref).toHaveBeenCalledTimes(1)
+
+    rerender(renderCarousel())
+
+    expect(ref).toHaveBeenCalledTimes(1)
+  })
 })
