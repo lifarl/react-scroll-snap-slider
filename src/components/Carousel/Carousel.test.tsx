@@ -1,7 +1,7 @@
 import React from 'react'
 import { Carousel } from './index'
-import { render, screen, fireEvent } from '@testing-library/react'
-import { act } from 'react-dom/test-utils'
+import { act, fireEvent, render, screen } from '@testing-library/react'
+import { describe, expect, it, vi } from 'vitest'
 
 const items = [
   {
@@ -22,26 +22,28 @@ describe('Carousel basic tests', () => {
         {items.map((item, index) => (
           <img key={index} src={item.src}></img>
         ))}
-      </Carousel>
+      </Carousel>,
     )
     expect(screen.getAllByRole('img')).toHaveLength(3)
   })
 
   it('fires scroll start and end callbacks', () => {
-    jest.useFakeTimers()
+    vi.useFakeTimers()
 
-    const onScrollStart = jest.fn()
-    const onScrollEnd = jest.fn()
+    const onScrollStart = vi.fn()
+    const onScrollEnd = vi.fn()
 
     const { container } = render(
       <Carousel onScrollStart={onScrollStart} onScrollEnd={onScrollEnd}>
         {items.map((item, index) => (
           <img key={index} src={item.src}></img>
         ))}
-      </Carousel>
+      </Carousel>,
     )
 
-    const slider = container.querySelector('div[tabindex="0"]') as HTMLDivElement
+    const slider = container.querySelector(
+      'div[tabindex="0"]',
+    ) as HTMLDivElement
     expect(slider).toBeTruthy()
 
     act(() => {
@@ -52,12 +54,30 @@ describe('Carousel basic tests', () => {
     expect(onScrollStart).toHaveBeenCalledWith(0)
 
     act(() => {
-      jest.advanceTimersByTime(300)
+      vi.advanceTimersByTime(300)
     })
 
     expect(onScrollEnd).toHaveBeenCalledTimes(1)
     expect(onScrollEnd).toHaveBeenCalledWith(0)
 
-    jest.useRealTimers()
+    vi.useRealTimers()
+  })
+
+  it('keeps the imperative handle stable across rerenders', () => {
+    const ref = vi.fn()
+    const renderCarousel = () => (
+      <Carousel ref={ref}>
+        {items.map((item, index) => (
+          <img key={index} src={item.src}></img>
+        ))}
+      </Carousel>
+    )
+    const { rerender } = render(renderCarousel())
+
+    expect(ref).toHaveBeenCalledTimes(1)
+
+    rerender(renderCarousel())
+
+    expect(ref).toHaveBeenCalledTimes(1)
   })
 })

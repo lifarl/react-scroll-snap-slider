@@ -9,19 +9,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
-      - name: Enable Corepack before setting up Node
-        run: corepack enable
-      - uses: actions/setup-node@v5
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: '22.x'
           registry-url: 'https://registry.npmjs.org'
-          # Do not use setup-node yarn cache; it runs Yarn before Corepack is enabled
-      - name: Enable Corepack and Yarn 4.9.4
+      - name: Enable Yarn 4.9.4
         run: |
           corepack enable
           corepack prepare yarn@4.9.4 --activate
-      - run: yarn install
+      - run: yarn install --immutable
+      - run: yarn lint
       - run: yarn test
       - run: yarn build
       - run: npm publish --access public

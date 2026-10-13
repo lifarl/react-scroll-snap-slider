@@ -4,16 +4,9 @@ import { StyledSlide } from './Slide.styled'
 
 const Slide = React.forwardRef(
   (
-    { slideIndex, slidesPerPageSettings, slideWidth, className, slideCount, children }: SlideProps,
-    ref: React.Ref<HTMLLIElement>
+    { slideIndex, className, slideCount, children }: SlideProps,
+    ref: React.Ref<HTMLLIElement>,
   ) => {
-    const baseMinWidth = slidesPerPageSettings
-      ? `${100 / slidesPerPageSettings.mobileSmall}%`
-      : slideWidth
-      ? `${slideWidth}px`
-      : '100%'
-
-
     return (
       <StyledSlide
         data-index-number={slideIndex}
@@ -27,7 +20,7 @@ const Slide = React.forwardRef(
         {children}
       </StyledSlide>
     )
-  }
+  },
 )
 
 Slide.displayName = 'Slide'

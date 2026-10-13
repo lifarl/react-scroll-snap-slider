@@ -35,7 +35,7 @@ export const Carousel = forwardRef(
       ariaLabel,
       children,
     }: CarouselProps,
-    ref: React.Ref<CarouselRef>
+    ref: React.Ref<CarouselRef>,
   ) => {
     const [isScrolling, setIsScrolling] = useState(false)
     const scrollTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -60,7 +60,7 @@ export const Carousel = forwardRef(
       () =>
         (sliderRef.current?.firstChild?.firstChild as HTMLUListElement)
           ?.clientWidth || 0,
-      []
+      [],
     )
 
     const intersectionCallback = useCallback(
@@ -77,7 +77,7 @@ export const Carousel = forwardRef(
               if (hadTabIndex) {
                 node.setAttribute(
                   'data-scs-prev-tabindex',
-                  String(node.getAttribute('tabindex'))
+                  String(node.getAttribute('tabindex')),
                 )
               } else {
                 node.setAttribute('data-scs-prev-tabindex', 'none')
@@ -113,7 +113,8 @@ export const Carousel = forwardRef(
             visibleSlidesIndices.current.sort()
 
             slideRefs.current[index]?.setAttribute('aria-hidden', 'false')
-            if (slideRefs.current[index]) enableFocusWithin(slideRefs.current[index])
+            if (slideRefs.current[index])
+              enableFocusWithin(slideRefs.current[index])
             slideRefs.current[index]?.classList.remove('scs-slide--hidden')
 
             onSlideVisible && onSlideVisible(index)
@@ -122,10 +123,11 @@ export const Carousel = forwardRef(
           }
 
           visibleSlidesIndices.current = visibleSlidesIndices.current.filter(
-            (item) => item !== index
+            (item) => item !== index,
           )
           slideRefs.current[index]?.setAttribute('aria-hidden', 'true')
-          if (slideRefs.current[index]) disableFocusWithin(slideRefs.current[index])
+          if (slideRefs.current[index])
+            disableFocusWithin(slideRefs.current[index])
           slideRefs.current[index]?.classList.add('scs-slide--hidden')
         })
 
@@ -138,11 +140,15 @@ export const Carousel = forwardRef(
           onSlidesVisibilityChange(medianVisibleSlideIndex.current)
         const count = React.Children.count(children)
         if (typeof medianVisibleSlideIndex.current === 'number' && count > 0) {
-          console.log(`Slide ${medianVisibleSlideIndex.current + 1} of ${count}`)
-          setAnnouncement(`Slide ${medianVisibleSlideIndex.current + 1} of ${count}`)
+          console.log(
+            `Slide ${medianVisibleSlideIndex.current + 1} of ${count}`,
+          )
+          setAnnouncement(
+            `Slide ${medianVisibleSlideIndex.current + 1} of ${count}`,
+          )
         }
       },
-      []
+      [],
     )
 
     const isSliderScrollable = useCallback(() => {
@@ -154,20 +160,23 @@ export const Carousel = forwardRef(
       return slideRefs.current.length * slideWidth > sliderWidth
     }, [])
 
-    const manualScroll = useCallback((direction: 'prev' | 'next') => {
-      const dir = direction === 'prev' ? -1 : 1
-      if (sliderRef.current) {
-        const slideWidth = getSlideWidth()
-        const slidesToScroll = Math.floor(
-          sliderRef.current.clientWidth / slideWidth
-        )
-        sliderRef.current.scrollBy({
-          top: 0,
-          behavior: 'smooth',
-          left: slidesToScroll * slideWidth * dir,
-        })
-      }
-    }, [getSlideWidth])
+    const manualScroll = useCallback(
+      (direction: 'prev' | 'next') => {
+        const dir = direction === 'prev' ? -1 : 1
+        if (sliderRef.current) {
+          const slideWidth = getSlideWidth()
+          const slidesToScroll = Math.floor(
+            sliderRef.current.clientWidth / slideWidth,
+          )
+          sliderRef.current.scrollBy({
+            top: 0,
+            behavior: 'smooth',
+            left: slidesToScroll * slideWidth * dir,
+          })
+        }
+      },
+      [getSlideWidth],
+    )
 
     const onSliderScroll = useCallback(() => {
       if (scrollTimeout.current !== null) {
@@ -214,10 +223,14 @@ export const Carousel = forwardRef(
       }
     }, [])
 
-    useImperativeHandle(ref, () => ({
-      scrollToSlide,
-      sliderRef,
-    }))
+    useImperativeHandle(
+      ref,
+      () => ({
+        scrollToSlide,
+        sliderRef,
+      }),
+      [scrollToSlide],
+    )
 
     useEffect(() => {
       if (observer.current) observer.current.disconnect()
@@ -225,7 +238,7 @@ export const Carousel = forwardRef(
         sliderRef.current,
         observer,
         intersectionCallback,
-        intersectionThreshold
+        intersectionThreshold,
       )
       for (const node of slideRefs.current) {
         if (node) {
@@ -310,8 +323,8 @@ export const Carousel = forwardRef(
       const baseMinWidth = slidesPerPageSettings
         ? `${100 / slidesPerPageSettings.mobileSmall}%`
         : slideWidth
-        ? `${slideWidth}px`
-        : '100%'
+          ? `${slideWidth}px`
+          : '100%'
 
       return {
         ['--scs-min-w' as any]: baseMinWidth,
@@ -376,7 +389,15 @@ export const Carousel = forwardRef(
               />
             </React.Fragment>
           )
-        }, [renderCustomArrow, classes?.navPrev, classes?.navNext, classes?.nav, classes?.arrow, sliderId, manualScroll])}
+        }, [
+          renderCustomArrow,
+          classes?.navPrev,
+          classes?.navNext,
+          classes?.nav,
+          classes?.arrow,
+          sliderId,
+          manualScroll,
+        ])}
 
         <StyledSlider
           ref={sliderRef}
@@ -408,14 +429,20 @@ export const Carousel = forwardRef(
                 ))}
               </StyledUl>
             )
-          }, [children, slidesPerPageSettings, slideWidth, classes?.list, classes?.slide])}
+          }, [
+            children,
+            slidesPerPageSettings,
+            slideWidth,
+            classes?.list,
+            classes?.slide,
+          ])}
           <div aria-live="polite" className="scs-visually-hidden">
             {announcement}
           </div>
         </StyledSlider>
       </StyledCarousel>
     )
-  }
+  },
 )
 
 Carousel.displayName = 'Carousel'
